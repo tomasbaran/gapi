@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           color: const Color(0xFF076AA2),
         ),
       ),
-      home: const ProvidersListScreen(title: 'Gapi: Yucatán'),
+      home: ProvidersListScreen(title: 'Gapi'),
     );
   }
 }

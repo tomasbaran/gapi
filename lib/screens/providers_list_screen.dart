@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gapi/constants.dart';
+import 'package:gapi/screens/add_provider_screen.dart';
+import 'package:gapi/widgets/bottom_black_button.dart';
 
 class ProvidersListScreen extends StatelessWidget {
-  const ProvidersListScreen({Key? key, required this.title}) : super(key: key);
+  ProvidersListScreen({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -16,25 +19,20 @@ class ProvidersListScreen extends StatelessWidget {
           height: 32,
         ),
         Container(
-            // color: Colors.amber,
-            height: 40,
-            child: ListView(scrollDirection: Axis.horizontal, children: [
-              SizedBox(width: 24),
-              Text('albañil'),
-              SizedBox(width: 12),
-              Text('plomero'),
-              SizedBox(width: 12),
-              Text('albañil'),
-              SizedBox(width: 12),
-              Text('plomero'),
-              SizedBox(width: 12),
-              Text('albañil'),
-              SizedBox(width: 12),
-              Text('plomero 99'),
-              SizedBox(width: 12),
-              Text('albañil 3 '),
-              Text('plomero23 23 23'),
-            ])),
+          height: 40,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: List.generate(
+              categories.length,
+              (index) => Row(
+                children: [
+                  const SizedBox(width: 24),
+                  Text(categories[index]),
+                ],
+              ),
+            ),
+          ),
+        ),
         SizedBox(
           height: 12,
         ),
@@ -70,98 +68,14 @@ class ProvidersListScreen extends StatelessWidget {
             ),
           ),
         ),
-        GestureDetector(
-          child: Container(
-            padding: const EdgeInsets.only(top: 20),
-            height: 70,
-            width: double.infinity,
-            color: Colors.black87,
-            child: const Align(
-              alignment: Alignment.topCenter,
-              child: Text(
-                'Añadir',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
+        BottomBlackButton(
+          title: 'Añadir',
           onTap: () => showModalBottomSheet(
             context: context,
-            builder: (BuildContext context) => Scaffold(
-              appBar: AppBar(
-                title: Text('Añade nuevo trabajador'),
-              ),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      DropdownList(),
-                      TextField(
-                        decoration: InputDecoration(
-                          label: Text('Nombre del proveedor'),
-                          border: OutlineInputBorder(),
-                          hintText: 'Juan Bautista',
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          label: Text('Teléfono del proveedor'),
-                          border: OutlineInputBorder(),
-                          hintText: '999 123 45 67',
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          label: Text('Disponible en'),
-                          border: OutlineInputBorder(),
-                          hintText: 'Mérida',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            builder: (BuildContext context) => AddProviderScreen(),
           ),
         ),
       ]),
-    );
-  }
-}
-
-class DropdownList extends StatefulWidget {
-  const DropdownList({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<DropdownList> createState() => _DropdownListState();
-}
-
-class _DropdownListState extends State<DropdownList> {
-  String dropdownValue = 'plomero';
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton(
-      items: [
-        DropdownMenuItem(
-          value: 'plomero',
-          child: Text('plomero'),
-        ),
-        DropdownMenuItem(
-          value: 'electricista',
-          child: Text('electricista'),
-        ),
-      ],
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
     );
   }
 }
