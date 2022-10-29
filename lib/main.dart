@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Gapi',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primaryColor: const Color(0xFF076AA2),
+        appBarTheme: AppBarTheme(
+          color: const Color(0xFF076AA2),
+        ),
       ),
       home: const ProvidersListScreen(title: 'Gapi: Yucatán'),
     );
