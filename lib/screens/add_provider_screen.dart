@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gapi/constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
+import 'package:flutter/services.dart';
 
 class AddProviderScreen extends StatefulWidget {
   AddProviderScreen({Key? key}) : super(key: key);
@@ -10,11 +11,10 @@ class AddProviderScreen extends StatefulWidget {
 }
 
 class _AddProviderScreenState extends State<AddProviderScreen> {
-  String? _dropdownValue;
+  String? categoryValue;
 
-  String category = 'unknown';
-  String providerName = 'unknown';
-  String providerPhone = 'unknown';
+  String? providerName;
+  String? providerPhone;
   String providerLocation = 'Merida';
 
   @override
@@ -41,7 +41,7 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                 ),
                 DropdownButton(
                   hint: const Text('categoría'),
-                  value: _dropdownValue,
+                  value: categoryValue,
                   items: List.generate(
                     categories.length,
                     (index) => DropdownMenuItem(
@@ -51,8 +51,7 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                   ),
                   onChanged: (newValue) {
                     setState(() {
-                      _dropdownValue = newValue;
-                      print('dropdownValue: $_dropdownValue');
+                      categoryValue = newValue;
                     });
                   },
                 ),
@@ -66,14 +65,16 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                 ),
                 SizedBox(height: 20),
                 TextField(
-                  onChanged: ((value) => providerPhone = value),
-                  decoration: InputDecoration(
-                    label: Text('Teléfono del proveedor'),
-                    border: OutlineInputBorder(),
-                    prefixText: '+52 ',
-                    hintText: '999 123 45 67',
-                  ),
-                ),
+                    onChanged: ((value) => providerPhone = value),
+                    decoration: InputDecoration(
+                      label: Text('Teléfono del proveedor'),
+                      border: OutlineInputBorder(),
+                      prefixText: '+52 ',
+                      hintText: '999 123 45 67',
+                    ),
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(10),
+                    ]),
                 SizedBox(height: 20),
               ],
             ),
@@ -81,10 +82,28 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
           BottomBlackButton(
             title: 'Hecho',
             onTap: () {
-              print('category: $category');
-              print('providersName: $providerName');
-              print('providersPhone: $providerPhone');
-              print('providersLocation: $providerLocation');
+              if (categoryValue == null || providerName == null || providerPhone == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    duration: Duration(seconds: 1),
+                    content: Text('Hay que rellenar todos los campos.'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              } else {
+                print('category: $categoryValue');
+                print('providersName: $providerName');
+                print('providersPhone: $providerPhone');
+                print('providersLocation: $providerLocation');
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(seconds: 1),
+                    content: Text('$providerName ha sido añadido.'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
 
               return;
             },
