@@ -30,7 +30,17 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
+                TextField(
+                  enabled: false,
+                  onChanged: ((value) => providerLocation = value),
+                  decoration: InputDecoration(
+                    label: Text('Mérida'),
+                    border: OutlineInputBorder(),
+                    hintText: 'Mérida',
+                  ),
+                ),
                 DropdownButton(
+                  hint: const Text('categoría'),
                   value: _dropdownValue,
                   items: List.generate(
                     categories.length,
@@ -42,6 +52,7 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                   onChanged: (newValue) {
                     setState(() {
                       _dropdownValue = newValue;
+                      print('dropdownValue: $_dropdownValue');
                     });
                   },
                 ),
@@ -59,19 +70,11 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                   decoration: InputDecoration(
                     label: Text('Teléfono del proveedor'),
                     border: OutlineInputBorder(),
+                    prefixText: '+52 ',
                     hintText: '999 123 45 67',
                   ),
                 ),
                 SizedBox(height: 20),
-                TextField(
-                  enabled: false,
-                  onChanged: ((value) => providerLocation = value),
-                  decoration: InputDecoration(
-                    label: Text('Mérida'),
-                    border: OutlineInputBorder(),
-                    hintText: 'Mérida',
-                  ),
-                ),
               ],
             ),
           ),
