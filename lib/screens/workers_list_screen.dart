@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,15 +22,23 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
 
   Future<List<Widget>> readWorkersFromDatabase() async {
     List<WorkerContainer> output = [];
-    output.add(WorkerContainer(workerName: 'workerName'));
 
     FirebaseDatabase database = FirebaseDatabase.instance;
 
     final ref = FirebaseDatabase.instance.ref();
     final snapshot = await ref.child('workers').get();
     if (snapshot.exists) {
-      List<Worker> workers = [];
-      for (var worker in snapshot.children) {}
+      // List<Worker> workers = [];
+
+      for (var worker in snapshot.children) {
+        final workerName = worker.child('name').value;
+        final workerPhoneNumber = worker.child('phone').value;
+        final workerCategory = worker.child('category').value;
+
+        if (workerCategory.toString() == categories[selectedCategoryIndex]) {
+          output.add(WorkerContainer(workerName: workerName.toString()));
+        }
+      }
       print(snapshot.children.length);
     } else {
       print('No data available.');

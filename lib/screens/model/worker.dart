@@ -2,5 +2,6 @@ class Worker {
   String? category;
   String? name;
   String? phoneNumber;
-  String location = 'Merida';
+
+  Worker({this.category, this.name, this.phoneNumber});
 }
