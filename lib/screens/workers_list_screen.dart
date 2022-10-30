@@ -111,7 +111,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
           ),
         ),
         BottomBlackButton(
-          title: 'Añadir',
+          title: '+ Añadir',
           onTap: () => showModalBottomSheet(
             isScrollControlled: true,
             context: context,
