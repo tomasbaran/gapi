@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class ProviderContainer extends StatelessWidget {
   const ProviderContainer({
     Key? key,
+    required this.providerName,
   }) : super(key: key);
+  final String providerName;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,8 @@ class ProviderContainer extends StatelessWidget {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text('Luis Jimenez'),
+              children: [
+                Text(providerName),
                 Text('calificaciones: 6'),
                 Text('reseñas: 1'),
               ],
