@@ -21,14 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Gapi',
+      title: 'Tedi',
       theme: ThemeData(
         primaryColor: const Color(0xFF076AA2),
         appBarTheme: AppBarTheme(
           color: const Color(0xFF076AA2),
         ),
       ),
-      home: WorkersListScreen(title: 'Gapi'),
+      home: WorkersListScreen(title: 'Tedi'),
     );
   }
 }
