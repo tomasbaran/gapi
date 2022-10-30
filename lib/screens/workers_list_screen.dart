@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gapi/constants.dart';
 import 'package:gapi/screens/add_worker_screen.dart';
@@ -107,7 +108,14 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
               future: readWorkersFromDatabase(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return ListView(children: snapshot.data ?? []);
+                  return ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(context).copyWith(
+                        dragDevices: {
+                          PointerDeviceKind.touch,
+                          PointerDeviceKind.mouse,
+                        },
+                      ),
+                      child: ListView(physics: const AlwaysScrollableScrollPhysics(), children: snapshot.data ?? []));
                 } else
                   return const SizedBox();
               },
