@@ -2,32 +2,35 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gapi/constants.dart';
-import 'package:gapi/screens/add_provider_screen.dart';
+import 'package:gapi/screens/add_worker_screen.dart';
+import 'package:gapi/screens/model/worker.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
-import 'package:gapi/widgets/provider_container.dart';
+import 'package:gapi/widgets/worker_container.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class ProvidersListScreen extends StatefulWidget {
-  ProvidersListScreen({Key? key, required this.title}) : super(key: key);
+class WorkersListScreen extends StatefulWidget {
+  WorkersListScreen({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  State<ProvidersListScreen> createState() => _ProvidersListScreenState();
+  State<WorkersListScreen> createState() => _WorkersListScreenState();
 }
 
-class _ProvidersListScreenState extends State<ProvidersListScreen> {
+class _WorkersListScreenState extends State<WorkersListScreen> {
   int selectedCategoryIndex = 0;
 
-  Future<List<Widget>> readProvidersFromDatabase() async {
-    List<ProviderContainer> output = [];
-    output.add(ProviderContainer(providerName: 'providerName'));
+  Future<List<Widget>> readWorkersFromDatabase() async {
+    List<WorkerContainer> output = [];
+    output.add(WorkerContainer(workerName: 'workerName'));
 
     FirebaseDatabase database = FirebaseDatabase.instance;
 
     final ref = FirebaseDatabase.instance.ref();
-    final snapshot = await ref.child('providers').get();
+    final snapshot = await ref.child('workers').get();
     if (snapshot.exists) {
-      print(snapshot.value);
+      List<Worker> workers = [];
+      for (var worker in snapshot.children) {}
+      print(snapshot.children.length);
     } else {
       print('No data available.');
     }
@@ -88,7 +91,7 @@ class _ProvidersListScreenState extends State<ProvidersListScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: FutureBuilder(
-              future: readProvidersFromDatabase(),
+              future: readWorkersFromDatabase(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Column(children: snapshot.data ?? []);
@@ -102,7 +105,7 @@ class _ProvidersListScreenState extends State<ProvidersListScreen> {
           title: 'Añadir',
           onTap: () => showModalBottomSheet(
             context: context,
-            builder: (BuildContext context) => AddProviderScreen(),
+            builder: (BuildContext context) => AddWorkerScreen(),
           ),
         ),
       ]),

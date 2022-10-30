@@ -4,22 +4,22 @@ import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class AddProviderScreen extends StatefulWidget {
-  AddProviderScreen({Key? key}) : super(key: key);
+class AddWorkerScreen extends StatefulWidget {
+  AddWorkerScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddProviderScreen> createState() => _AddProviderScreenState();
+  State<AddWorkerScreen> createState() => _AddWorkerScreenState();
 }
 
-class _AddProviderScreenState extends State<AddProviderScreen> {
+class _AddWorkerScreenState extends State<AddWorkerScreen> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference ref = FirebaseDatabase.instance.ref();
 
-  String? categoryValue;
+  String? categoryName;
 
-  String? providerName;
-  String? providerPhone;
-  String providerLocation = 'Merida';
+  String? workerName;
+  String? workerPhone;
+  String workerLocation = 'Merida';
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
               children: [
                 TextField(
                   enabled: false,
-                  onChanged: ((value) => providerLocation = value),
+                  onChanged: ((value) => workerLocation = value),
                   decoration: InputDecoration(
                     label: Text('Mérida'),
                     border: OutlineInputBorder(),
@@ -45,7 +45,7 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                 ),
                 DropdownButton(
                   hint: const Text('categoría'),
-                  value: categoryValue,
+                  value: categoryName,
                   items: List.generate(
                     categories.length,
                     (index) => DropdownMenuItem(
@@ -55,12 +55,12 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                   ),
                   onChanged: (newValue) {
                     setState(() {
-                      categoryValue = newValue;
+                      categoryName = newValue;
                     });
                   },
                 ),
                 TextField(
-                  onChanged: ((value) => providerName = value),
+                  onChanged: ((value) => workerName = value),
                   decoration: InputDecoration(
                     label: Text('Nombre del proveedor'),
                     border: OutlineInputBorder(),
@@ -69,7 +69,7 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                 ),
                 SizedBox(height: 20),
                 TextField(
-                    onChanged: ((value) => providerPhone = value),
+                    onChanged: ((value) => workerPhone = value),
                     decoration: InputDecoration(
                       label: Text('Teléfono del proveedor'),
                       border: OutlineInputBorder(),
@@ -86,7 +86,7 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
           BottomBlackButton(
             title: 'Hecho',
             onTap: () async {
-              if (categoryValue == null || providerName == null || providerPhone == null) {
+              if (categoryName == null || workerName == null || workerPhone == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     duration: Duration(seconds: 1),
@@ -95,25 +95,26 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                   ),
                 );
               } else {
-                print('category: $categoryValue');
-                print('providersName: $providerName');
-                print('providersPhone: $providerPhone');
-                print('providersLocation: $providerLocation');
+                print('category: $categoryName');
+                print('workerName: $workerName');
+                print('workerPhone: $workerPhone');
+                print('workerLocation: $workerLocation');
 
-                DatabaseReference ref = FirebaseDatabase.instance.ref("providers");
+                DatabaseReference ref = FirebaseDatabase.instance.ref("workers");
                 DatabaseReference newRef = ref.push();
 
                 await newRef.set({
-                  'name': providerName,
-                  'phone': providerPhone,
-                  'location': {'location1': providerLocation},
+                  'name': workerName,
+                  'phone': workerPhone,
+                  'category': categoryName,
+                  'location': {'location1': workerLocation},
                 });
 
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     duration: Duration(seconds: 1),
-                    content: Text('$providerName ha sido añadido.'),
+                    content: Text('$workerName ha sido añadido.'),
                     backgroundColor: Colors.green,
                   ),
                 );
