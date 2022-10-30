@@ -28,11 +28,14 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.8.0)"
   - leveldb-library (1.22.1)
   - PromisesObjC (2.1.1)
+  - url_launcher_ios (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
   - Flutter (from `Flutter`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -51,6 +54,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_database/ios"
   Flutter:
     :path: Flutter
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   Firebase: 1b810f3d0c0532e27a48f1961f8c0400a668a2cf
@@ -63,6 +68,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
