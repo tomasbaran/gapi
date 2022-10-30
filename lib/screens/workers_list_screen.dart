@@ -36,7 +36,11 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
         final workerCategory = worker.child('category').value;
 
         if (workerCategory.toString() == categories[selectedCategoryIndex]) {
-          output.add(WorkerContainer(workerName: workerName.toString()));
+          output.add(WorkerContainer(
+            phoneNumber: workerPhoneNumber.toString(),
+            workerName: workerName.toString(),
+            categoryName: workerCategory.toString(),
+          ));
         }
       }
       print(snapshot.children.length);
@@ -103,7 +107,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
               future: readWorkersFromDatabase(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Column(children: snapshot.data ?? []);
+                  return ListView(children: snapshot.data ?? []);
                 } else
                   return const SizedBox();
               },
@@ -111,7 +115,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
           ),
         ),
         BottomBlackButton(
-          title: '+ Añadir',
+          title: '+ AÑADIR',
           onTap: () => showModalBottomSheet(
             isScrollControlled: true,
             context: context,
