@@ -12,8 +12,8 @@ class BottomBlackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        padding: const EdgeInsets.only(top: 20),
-        height: 70,
+        padding: const EdgeInsets.only(top: 15),
+        height: 50,
         width: double.infinity,
         color: Colors.black87,
         child: Align(

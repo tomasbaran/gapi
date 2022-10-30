@@ -1,1 +1,1 @@
-const List<String> categories = <String>['plomería', 'jardín', 'alberca', 'electricidad', 'limpieza', 'mecánica'];
+const List<String> categories = <String>['plomería', 'jardín', 'electricidad', 'mecánica', 'alberca', 'limpieza'];
