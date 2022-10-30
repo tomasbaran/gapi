@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "305647422127",
+    "firebase_url": "https://gapi-b0d34-default-rtdb.firebaseio.com",
+    "project_id": "gapi-b0d34",
+    "storage_bucket": "gapi-b0d34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305647422127:android:5c9d548bc9d7f03829225a",
+        "android_client_info": {
+          "package_name": "com.example.gapi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305647422127-13pju0q48gkpcnnnvb1qnfuh6kvtlkqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAES52iP-9auSRx6KRPUFRHhS8yXkF_EXs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305647422127-13pju0q48gkpcnnnvb1qnfuh6kvtlkqb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gapi/constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class AddProviderScreen extends StatefulWidget {
   AddProviderScreen({Key? key}) : super(key: key);
@@ -11,6 +12,9 @@ class AddProviderScreen extends StatefulWidget {
 }
 
 class _AddProviderScreenState extends State<AddProviderScreen> {
+  FirebaseDatabase database = FirebaseDatabase.instance;
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
+
   String? categoryValue;
 
   String? providerName;
@@ -81,7 +85,7 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
           ),
           BottomBlackButton(
             title: 'Hecho',
-            onTap: () {
+            onTap: () async {
               if (categoryValue == null || providerName == null || providerPhone == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -95,6 +99,16 @@ class _AddProviderScreenState extends State<AddProviderScreen> {
                 print('providersName: $providerName');
                 print('providersPhone: $providerPhone');
                 print('providersLocation: $providerLocation');
+
+                DatabaseReference ref = FirebaseDatabase.instance.ref("providers");
+                DatabaseReference newRef = ref.push();
+
+                await newRef.set({
+                  'name': providerName,
+                  'phone': providerPhone,
+                  'location': {'location1': providerLocation},
+                });
+
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
