@@ -30,6 +30,13 @@
             {
               "client_id": "305647422127-13pju0q48gkpcnnnvb1qnfuh6kvtlkqb.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "305647422127-p70kjbom7vmtk9no351pbdugb7o31qkc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gapi"
+              }
             }
           ]
         }
