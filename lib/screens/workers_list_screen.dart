@@ -65,6 +65,22 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        width: 70,
+        height: 70,
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(
+            Icons.add,
+            size: 40,
+          ),
+          onPressed: () => showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (BuildContext context) => AddWorkerScreen(categoryIndex: selectedCategoryIndex),
+          ),
+        ),
+      ),
       appBar: AppBar(
         toolbarHeight: 70,
         elevation: 0,
@@ -178,14 +194,14 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             },
           ),
         ),
-        BottomBlackButton(
-          title: '+ AÑADIR',
-          onTap: () => showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) => AddWorkerScreen(),
-          ),
-        ),
+        // BottomButton(
+        //   title: '+ AÑADIR',
+        //   onTap: () => showModalBottomSheet(
+        //     isScrollControlled: true,
+        //     context: context,
+        //     builder: (BuildContext context) => AddWorkerScreen(),
+        //   ),
+        // ),
       ]),
     );
   }

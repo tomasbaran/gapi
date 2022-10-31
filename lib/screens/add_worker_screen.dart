@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:gapi/constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class AddWorkerScreen extends StatefulWidget {
-  AddWorkerScreen({Key? key}) : super(key: key);
+  AddWorkerScreen({Key? key, required this.categoryIndex}) : super(key: key);
+  int categoryIndex;
 
   @override
   State<AddWorkerScreen> createState() => _AddWorkerScreenState();
@@ -18,8 +21,14 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   String? categoryName;
 
   String? workerName;
-  String? workerPhone;
+  String workerPhone = '';
   String workerLocation = 'Merida';
+
+  @override
+  void initState() {
+    super.initState();
+    categoryName = categories[widget.categoryIndex];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +53,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   ),
                 ),
                 DropdownButton(
-                  hint: const Text('categoría'),
+                  // hint: Text(categories[widget.categoryIndex]),
                   value: categoryName,
                   items: List.generate(
                     categories.length,
@@ -69,6 +78,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                 ),
                 SizedBox(height: 20),
                 TextField(
+                    keyboardType: TextInputType.phone,
                     onChanged: ((value) => workerPhone = value),
                     decoration: InputDecoration(
                       label: Text('Teléfono del proveedor'),
@@ -77,13 +87,15 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                       hintText: '999 123 45 67',
                     ),
                     inputFormatters: [
-                      LengthLimitingTextInputFormatter(10),
+                      LengthLimitingTextInputFormatter(13),
+                      MaskedInputFormatter('### ### ## ##'),
+                      // MaskedInputFormater('(###) ###-####'),
                     ]),
                 SizedBox(height: 20),
               ],
             ),
           ),
-          BottomBlackButton(
+          BottomButton(
             title: 'Hecho',
             onTap: () async {
               if (categoryName == null || workerName == null || workerPhone == null) {
@@ -98,6 +110,10 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                 print('category: $categoryName');
                 print('workerName: $workerName');
                 print('workerPhone: $workerPhone');
+
+                // format phoneNumber to delete all spacebars
+                workerPhone = workerPhone.replaceAll(' ', '');
+
                 print('workerLocation: $workerLocation');
 
                 DatabaseReference ref = FirebaseDatabase.instance.ref("workers");

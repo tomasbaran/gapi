@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'dart:async';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class WorkersDetailScreen extends StatefulWidget {
   final String categoryName;
@@ -16,10 +17,25 @@ class WorkersDetailScreen extends StatefulWidget {
 
 class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
   bool _hasCallSupport = false;
-  Future<void>? _launched;
+  String parsedPhoneNumber = '...';
+
+  // Future<void>? _launched;
+
+  Future formatPhoneNumber() async {
+    parsedPhoneNumber = widget.phoneNumber.substring(0, 3) +
+        " " +
+        widget.phoneNumber.substring(3, 6) +
+        " " +
+        widget.phoneNumber.substring(6, 8) +
+        " " +
+        widget.phoneNumber.substring(8, widget.phoneNumber.length);
+  }
+
   @override
   void initState() {
     super.initState();
+
+    formatPhoneNumber();
     // Check for phone call support.
     UrlLauncher.canLaunchUrl(Uri(scheme: 'tel', path: '123')).then((bool result) {
       setState(() {
@@ -42,6 +58,18 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
     }
 
     return Scaffold(
+      floatingActionButton: Container(
+        width: 70,
+        height: 70,
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(
+            Icons.star_border,
+            size: 40,
+          ),
+          onPressed: () => null,
+        ),
+      ),
       appBar: AppBar(title: Text(widget.categoryName)),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,7 +83,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   child: Container(
                     margin: EdgeInsets.all(32),
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: Colors.black12,
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
@@ -74,11 +102,18 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.location_on_outlined),
-                  Text('Mérida y sus alrededores'),
+                  Icon(
+                    Icons.location_on_outlined,
+                    color: Colors.grey,
+                  ),
+                  Text(
+                    'Mérida y sus alrededores',
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ],
               )
             ]),
@@ -132,7 +167,8 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   Icon(Icons.phone),
                   SizedBox(width: 12),
                   Text(
-                    widget.phoneNumber,
+                    parsedPhoneNumber,
+                    // widget.phoneNumber,
                     style: TextStyle(fontSize: 20),
                   ),
                   SizedBox(width: 12),
@@ -142,7 +178,6 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          BottomBlackButton(title: '+ AÑADIR EVALUACIÓN', onTap: () => null),
         ],
       ),
     );

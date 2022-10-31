@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BottomBlackButton extends StatelessWidget {
-  BottomBlackButton({
+class BottomButton extends StatelessWidget {
+  BottomButton({
     required this.title,
     required this.onTap,
   });
