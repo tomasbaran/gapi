@@ -61,7 +61,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
   }
 
   List<Widget> defaultWidgetList = [];
-
+  final _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,15 +117,27 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(context).copyWith(
-                        dragDevices: {
-                          PointerDeviceKind.touch,
-                          PointerDeviceKind.mouse,
-                        },
+                    behavior: ScrollConfiguration.of(context).copyWith(
+                      dragDevices: {
+                        PointerDeviceKind.touch,
+                        PointerDeviceKind.mouse,
+                      },
+                    ),
+                    child: PageView.builder(
+                      onPageChanged: (value) {
+                        setState(() {
+                          selectedCategoryIndex = value;
+                        });
+                      },
+                      controller: _pageController,
+                      itemBuilder: (context, index) => ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        children: snapshot.data ?? [],
                       ),
-                      child: ListView(physics: const AlwaysScrollableScrollPhysics(), children: snapshot.data ?? []));
+                    ),
+                  );
                 } else
-                  return const SizedBox();
+                  return const Text('...');
               },
             ),
           ),
