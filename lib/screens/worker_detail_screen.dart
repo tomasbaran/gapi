@@ -43,43 +43,51 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.categoryName)),
-      body: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Expanded(
-          child: ListView(children: [
-            UnconstrainedBox(
-              child: LimitedBox(
-                maxHeight: 200,
-                maxWidth: 200,
-                child: Container(
-                  margin: EdgeInsets.all(32),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: ListView(children: [
+              UnconstrainedBox(
+                child: LimitedBox(
+                  maxHeight: 200,
+                  maxWidth: 200,
+                  child: Container(
+                    margin: EdgeInsets.all(32),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '? %',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
+                    child: Center(
+                      child: Text(
+                        '? %',
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Text(
-              widget.workerName,
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
-          ]),
-        ),
-        Center(
-          child: Padding(
+              Text(
+                widget.workerName,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.location_on_outlined),
+                  Text('Mérida y sus alrededores'),
+                ],
+              )
+            ]),
+          ),
+          Center(
+            child: Padding(
               padding: const EdgeInsets.all(16.0),
               child:
-
-                  //  ElevatedButton(
+                  // ElevatedButton(
                   //   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor)),
                   //   onPressed: () {
                   //     _hasCallSupport
@@ -107,6 +115,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   //   //   ),
                   //   // ),
                   // ),
+
                   GestureDetector(
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: widget.phoneNumber)).then((value) {
@@ -130,11 +139,13 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   SizedBox(width: 12),
                   Icon(Icons.copy),
                 ]),
-              )),
-        ),
-        const SizedBox(height: 12),
-        BottomBlackButton(title: '+ AÑADIR EVALUACIÓN', onTap: () => null),
-      ]),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          BottomBlackButton(title: '+ AÑADIR EVALUACIÓN', onTap: () => null),
+        ],
+      ),
     );
   }
 }
