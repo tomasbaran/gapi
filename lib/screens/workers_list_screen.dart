@@ -66,26 +66,42 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 70,
         elevation: 0,
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              widget.title,
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 24,
+        title: Align(
+          alignment: Alignment.topLeft,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 26,
+                ),
               ),
-            ),
-            Text(
-              ': $workersCounter proveederos',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Icon(
+                    Icons.location_on_outlined,
+                    color: Colors.white70,
+                    size: 14,
+                  ),
+                  Text(
+                    'Mérida: $workersCounter proveedores',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
       body: Column(children: [

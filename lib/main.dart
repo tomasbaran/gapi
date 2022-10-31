@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tedi',
       theme: ThemeData(
-        primaryColor: const Color.fromARGB(255, 3, 181, 154),
+        primaryColor: Color.fromARGB(255, 0, 148, 126),
         appBarTheme: AppBarTheme(
-          color: const Color.fromARGB(255, 3, 181, 154),
+          color: Color.fromARGB(255, 0, 148, 126),
         ),
       ),
       home: WorkersListScreen(title: 'Tedi.app'),
