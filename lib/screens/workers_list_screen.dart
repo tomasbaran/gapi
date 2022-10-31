@@ -20,6 +20,8 @@ class WorkersListScreen extends StatefulWidget {
 
 class _WorkersListScreenState extends State<WorkersListScreen> {
   int selectedCategoryIndex = 0;
+  bool countedWorkers = false;
+  int workersCounter = 0;
 
   Future<List<Widget>> readWorkersFromDatabase() async {
     List<WorkerContainer> output = [];
@@ -45,6 +47,12 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
         }
       }
       print(snapshot.children.length);
+      if (!countedWorkers) {
+        setState(() {
+          workersCounter = snapshot.children.length;
+          countedWorkers = true;
+        });
+      }
     } else {
       print('No data available.');
     }
@@ -58,7 +66,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title + ': $workersCounter proveederos'),
       ),
       body: Column(children: [
         SizedBox(
