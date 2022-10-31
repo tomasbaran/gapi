@@ -23,12 +23,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tedi',
       theme: ThemeData(
-        primaryColor: const Color(0xFF076AA2),
+        primaryColor: const Color.fromARGB(255, 3, 181, 154),
         appBarTheme: AppBarTheme(
-          color: const Color(0xFF076AA2),
+          color: const Color.fromARGB(255, 3, 181, 154),
         ),
       ),
-      home: WorkersListScreen(title: 'Tedi'),
+      home: WorkersListScreen(title: 'Tedi.app'),
     );
   }
 }

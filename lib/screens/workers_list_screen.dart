@@ -66,13 +66,31 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title + ': $workersCounter proveederos'),
+        elevation: 0,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              widget.title,
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              ': $workersCounter proveederos',
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(children: [
-        SizedBox(
-          height: 32,
-        ),
         Container(
+          color: Theme.of(context).primaryColor,
           height: 40,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -83,14 +101,17 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                   const SizedBox(width: 24),
                   index == selectedCategoryIndex
                       ? Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          padding: const EdgeInsets.all(12),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              topRight: const Radius.circular(12),
+                            ),
                           ),
                           child: Text(
                             categories[index],
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
                           ),
                         )
                       : GestureDetector(
@@ -100,6 +121,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                           }),
                           child: Text(
                             categories[index],
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                 ],

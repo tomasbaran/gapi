@@ -25,9 +25,9 @@ class WorkerContainer extends StatelessWidget {
                   ))),
       child: Container(
           margin: EdgeInsets.symmetric(vertical: 8),
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.grey[300],
+            color: Color.fromARGB(30, 3, 181, 154),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           child: Row(
@@ -45,8 +45,8 @@ class WorkerContainer extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.all(Radius.circular(8))),
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: const Text(
                   '? %',
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

@@ -15,7 +15,7 @@ class BottomBlackButton extends StatelessWidget {
         padding: const EdgeInsets.only(top: 15),
         height: 50,
         width: double.infinity,
-        color: Colors.black87,
+        color: Theme.of(context).primaryColor,
         child: Align(
           alignment: Alignment.topCenter,
           child: Text(
