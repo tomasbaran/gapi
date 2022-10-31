@@ -96,6 +96,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                       : GestureDetector(
                           onTap: () => setState(() {
                             selectedCategoryIndex = index;
+                            _pageController.jumpToPage(selectedCategoryIndex);
                           }),
                           child: Text(
                             categories[index],
