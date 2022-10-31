@@ -149,36 +149,33 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
           height: 8,
         ),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: FutureBuilder(
-              future: readWorkersFromDatabase(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(context).copyWith(
-                      dragDevices: {
-                        PointerDeviceKind.touch,
-                        PointerDeviceKind.mouse,
-                      },
+          child: FutureBuilder(
+            future: readWorkersFromDatabase(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context).copyWith(
+                    dragDevices: {
+                      PointerDeviceKind.touch,
+                      PointerDeviceKind.mouse,
+                    },
+                  ),
+                  child: PageView.builder(
+                    onPageChanged: (value) {
+                      setState(() {
+                        selectedCategoryIndex = value;
+                      });
+                    },
+                    controller: _pageController,
+                    itemBuilder: (context, index) => ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: snapshot.data ?? [],
                     ),
-                    child: PageView.builder(
-                      onPageChanged: (value) {
-                        setState(() {
-                          selectedCategoryIndex = value;
-                        });
-                      },
-                      controller: _pageController,
-                      itemBuilder: (context, index) => ListView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        children: snapshot.data ?? [],
-                      ),
-                    ),
-                  );
-                } else
-                  return const Text('...');
-              },
-            ),
+                  ),
+                );
+              } else
+                return const Text('...');
+            },
           ),
         ),
         BottomBlackButton(

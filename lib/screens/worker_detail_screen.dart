@@ -121,10 +121,9 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   Clipboard.setData(ClipboardData(text: widget.phoneNumber)).then((value) {
                     //only if ->
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                         duration: Duration(seconds: 1),
                         content: Text('Copiado.'),
-                        backgroundColor: Colors.green,
                       ),
                     ); // -> show a notification
                   });

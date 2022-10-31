@@ -115,7 +115,6 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   SnackBar(
                     duration: Duration(seconds: 1),
                     content: Text('$workerName ha sido añadido.'),
-                    backgroundColor: Colors.green,
                   ),
                 );
               }
