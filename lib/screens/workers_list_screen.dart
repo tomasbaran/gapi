@@ -135,7 +135,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                       ? Container(
                           padding: const EdgeInsets.all(12),
                           decoration: const BoxDecoration(
-                            color: Colors.white,
+                            color: Color(0xFFFAFAFA),
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(12),
                               topRight: const Radius.circular(12),
