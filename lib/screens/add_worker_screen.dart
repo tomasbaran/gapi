@@ -23,10 +23,12 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   String? workerName;
   String workerPhone = '';
   String workerLocation = 'Merida';
+  bool showCategoryValue = false;
 
   @override
   void initState() {
     super.initState();
+    if (widget.categoryIndex != 0) showCategoryValue = true;
     categoryName = categories[widget.categoryIndex];
   }
 
@@ -53,8 +55,9 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   ),
                 ),
                 DropdownButton(
-                  // hint: Text(categories[widget.categoryIndex]),
-                  value: categoryName,
+                  hint: Text('categoría'),
+                  // don's select the first category as default to prevents mistaken data
+                  value: showCategoryValue ? categoryName : null,
                   items: List.generate(
                     categories.length,
                     (index) => DropdownMenuItem(
@@ -63,6 +66,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                     ),
                   ),
                   onChanged: (newValue) {
+                    showCategoryValue = true;
                     setState(() {
                       categoryName = newValue;
                     });
