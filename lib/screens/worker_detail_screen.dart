@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gapi/screens/add_review_screen.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
+import 'package:gapi/widgets/review_container.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'dart:async';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -69,7 +71,12 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
             Icons.star_border,
             size: 40,
           ),
-          onPressed: () => null,
+          onPressed: () => showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) => AddReviewScreen(
+              workerName: widget.workerName,
+            ),
+          ),
         ),
       ),
       appBar: AppBar(title: Text(widget.categoryName)),
@@ -121,45 +128,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   ],
                 ),
                 SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Responsabilidad',
-                          style: tsReviewCategory,
-                        ),
-                        SizedBox(height: kSizeBtwRankings),
-                        Text(
-                          'Calidad',
-                          style: tsReviewCategory,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        FiveStarRow(),
-                        SizedBox(height: kSizeBtwRankings),
-                        FiveStarRow(),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          '?',
-                          style: tsReviewCategoryResult,
-                        ),
-                        SizedBox(height: kSizeBtwRankings),
-                        Text(
-                          '?',
-                          style: tsReviewCategoryResult,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                ReviewContainer(),
                 SizedBox(height: 24),
                 ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -173,7 +142,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   ),
                 ),
                 Text(
-                  '24.10.2022',
+                  '24.10.2022: 79%',
                   style: tsReviewCategoryCommentDate,
                 ),
               ]),
@@ -241,25 +210,6 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class FiveStarRow extends StatelessWidget {
-  const FiveStarRow({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(Icons.star_border_outlined),
-        Icon(Icons.star_border_outlined),
-        Icon(Icons.star_border_outlined),
-        Icon(Icons.star_border_outlined),
-        Icon(Icons.star_border_outlined),
-      ],
     );
   }
 }
