@@ -101,9 +101,9 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
             ),
           ),
           BottomButton(
-            title: 'Hecho',
+            title: 'Añade nuevo proveedor',
             onTap: () async {
-              if (categoryName == null || workerName == null || workerPhone == null) {
+              if (categoryName == null || workerName == null || workerPhone == null || !showCategoryValue) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     duration: Duration(seconds: 1),
