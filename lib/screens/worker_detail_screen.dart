@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'dart:async';
@@ -22,8 +23,9 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
   // Future<void>? _launched;
 
   Future formatPhoneNumber() async {
-    parsedPhoneNumber = widget.phoneNumber.substring(0, 3) +
-        " " +
+    parsedPhoneNumber = "(" +
+        widget.phoneNumber.substring(0, 3) +
+        ") " +
         widget.phoneNumber.substring(3, 6) +
         " " +
         widget.phoneNumber.substring(6, 8) +
@@ -71,115 +73,193 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
         ),
       ),
       appBar: AppBar(title: Text(widget.categoryName)),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: ListView(children: [
-              UnconstrainedBox(
-                child: LimitedBox(
-                  maxHeight: 200,
-                  maxWidth: 200,
-                  child: Container(
-                    margin: EdgeInsets.all(32),
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: ListView(children: [
+                UnconstrainedBox(
+                  child: LimitedBox(
+                    maxHeight: 200,
+                    maxWidth: 200,
+                    child: Container(
+                      margin: EdgeInsets.all(32),
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '? %',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
+                      child: Center(
+                        child: Text(
+                          '? %',
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Text(
-                widget.workerName,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    color: Colors.grey,
+                Text(
+                  widget.workerName,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.location_on_outlined,
+                      color: Colors.grey,
+                    ),
+                    Text(
+                      'Mérida y sus alrededores',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Responsabilidad',
+                          style: tsReviewCategory,
+                        ),
+                        SizedBox(height: kSizeBtwRankings),
+                        Text(
+                          'Calidad',
+                          style: tsReviewCategory,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        FiveStarRow(),
+                        SizedBox(height: kSizeBtwRankings),
+                        FiveStarRow(),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          '?',
+                          style: tsReviewCategoryResult,
+                        ),
+                        SizedBox(height: kSizeBtwRankings),
+                        Text(
+                          '?',
+                          style: tsReviewCategoryResult,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  child: Container(
+                    padding: EdgeInsets.all(12),
+                    color: kGreen,
+                    child: Text(
+                      'rsitenrsi aistenars airstna irsetnaisetna isetna istnairstnaisretnairstnaist airs rsetniarsent. sret irsnt aisten ars.ta setn airst arstears.t r.st ras.t.ars t. rst tts tst.',
+                      style: tsReviewCategoryComment,
+                    ),
                   ),
-                  Text(
-                    'Mérida y sus alrededores',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              )
-            ]),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child:
-                  // ElevatedButton(
-                  //   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor)),
-                  //   onPressed: () {
-                  //     _hasCallSupport
-                  //         ? () => setState(() {
-                  //               _launched = _makePhoneCall(widget.phoneNumber.toString());
-                  //             })
-                  //         : null;
-                  //   },
-                  //   child: _hasCallSupport ? const Text('Make phone call') : const Text('Calling not supported'),
-                  //   // child:
-                  //   // Padding(
-                  //   //   padding: const EdgeInsets.all(16.0),
-                  //   //   child: Row(
-                  //   //     mainAxisSize: MainAxisSize.min,
-                  //   //     children: [
-                  //   //       Icon(Icons.phone),
-                  //   //       const SizedBox(
-                  //   //         width: 12,
-                  //   //       ),
-                  //   //       Text(
-                  //   //         widget.phoneNumber,
-                  //   //         style: TextStyle(fontSize: 20),
-                  //   //       ),
-                  //   //     ],
-                  //   //   ),
-                  //   // ),
-                  // ),
+                ),
+                Text(
+                  '24.10.2022',
+                  style: tsReviewCategoryCommentDate,
+                ),
+              ]),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child:
+                    // ElevatedButton(
+                    //   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor)),
+                    //   onPressed: () {
+                    //     _hasCallSupport
+                    //         ? () => setState(() {
+                    //               _launched = _makePhoneCall(widget.phoneNumber.toString());
+                    //             })
+                    //         : null;
+                    //   },
+                    //   child: _hasCallSupport ? const Text('Make phone call') : const Text('Calling not supported'),
+                    //   // child:
+                    //   // Padding(
+                    //   //   padding: const EdgeInsets.all(16.0),
+                    //   //   child: Row(
+                    //   //     mainAxisSize: MainAxisSize.min,
+                    //   //     children: [
+                    //   //       Icon(Icons.phone),
+                    //   //       const SizedBox(
+                    //   //         width: 12,
+                    //   //       ),
+                    //   //       Text(
+                    //   //         widget.phoneNumber,
+                    //   //         style: TextStyle(fontSize: 20),
+                    //   //       ),
+                    //   //     ],
+                    //   //   ),
+                    //   // ),
+                    // ),
 
-                  GestureDetector(
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: widget.phoneNumber)).then((value) {
-                    //only if ->
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        duration: Duration(seconds: 1),
-                        content: Text('Copiado.'),
-                      ),
-                    ); // -> show a notification
-                  });
-                },
-                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Icon(Icons.phone),
-                  SizedBox(width: 12),
-                  Text(
-                    parsedPhoneNumber,
-                    // widget.phoneNumber,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(width: 12),
-                  Icon(Icons.copy),
-                ]),
+                    GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: widget.phoneNumber)).then((value) {
+                      //only if ->
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: Duration(seconds: 1),
+                          content: Text('Copiado.'),
+                        ),
+                      ); // -> show a notification
+                    });
+                  },
+                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Icon(Icons.phone),
+                    SizedBox(width: 12),
+                    Text(
+                      parsedPhoneNumber,
+                      // widget.phoneNumber,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(width: 12),
+                    Icon(Icons.copy),
+                  ]),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 12),
-        ],
+            const SizedBox(height: 12),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class FiveStarRow extends StatelessWidget {
+  const FiveStarRow({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(Icons.star_border_outlined),
+        Icon(Icons.star_border_outlined),
+        Icon(Icons.star_border_outlined),
+        Icon(Icons.star_border_outlined),
+        Icon(Icons.star_border_outlined),
+      ],
     );
   }
 }

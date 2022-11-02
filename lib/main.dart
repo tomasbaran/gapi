@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gapi/screens/workers_list_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gapi/theme/style_constants.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,9 +24,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tedi',
       theme: ThemeData(
-        primaryColor: Color.fromARGB(255, 0, 170, 145),
+        primaryColor: kPrimaryColor1,
         appBarTheme: AppBarTheme(
-          color: Color.fromARGB(255, 0, 170, 145),
+          color: kPrimaryColor1,
         ),
       ),
       home: WorkersListScreen(title: 'Tedi.app'),

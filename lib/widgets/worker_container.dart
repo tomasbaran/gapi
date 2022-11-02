@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gapi/screens/worker_detail_screen.dart';
+import 'package:gapi/theme/style_constants.dart';
 
 class WorkerContainer extends StatelessWidget {
   const WorkerContainer({
@@ -27,7 +28,7 @@ class WorkerContainer extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Color.fromARGB(18, 0, 148, 126),
+            color: kPrimaryColorLight,
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           child: Row(
