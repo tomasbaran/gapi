@@ -73,6 +73,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   },
                 ),
                 TextField(
+                  textCapitalization: TextCapitalization.words,
                   onChanged: ((value) => workerName = value),
                   decoration: InputDecoration(
                     label: Text('Nombre del proveedor'),

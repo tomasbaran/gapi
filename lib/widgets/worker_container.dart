@@ -27,7 +27,7 @@ class WorkerContainer extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Color.fromARGB(35, 0, 148, 126),
+            color: Color.fromARGB(18, 0, 148, 126),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           child: Row(
