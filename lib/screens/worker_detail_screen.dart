@@ -90,7 +90,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
       ),
       appBar: AppBar(title: Text(widget.categoryName)),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -206,7 +206,6 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
           ],
         ),
       ),

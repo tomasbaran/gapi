@@ -16,11 +16,11 @@ class AddReviewScreen extends StatelessWidget {
         title: Text(
           'Añade reseña: $workerName',
           style: TextStyle(
-            color: kColorAlmostBlack,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: kPrimaryColor2,
-        foregroundColor: kColorAlmostBlack,
+        backgroundColor: kColorDarkGrey,
+        // foregroundColor: kPrimaryColor2,
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         SizedBox(height: 16),

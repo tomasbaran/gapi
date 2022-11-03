@@ -95,25 +95,24 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 26,
-                ),
+              Row(
+                children: [
+                  Text(widget.title, style: tsMainAppBarTitle),
+                  Text(': servicios del hogar', style: tsMainAppBarSubtitle),
+                ],
               ),
               const SizedBox(height: 4),
               Row(
                 children: [
                   Icon(
                     Icons.location_on_outlined,
-                    color: Colors.white70,
+                    color: kColorGrey,
                     size: 14,
                   ),
                   Text(
                     'Mérida: $workersCounter proveedores',
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: kColorGrey,
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                     ),
@@ -148,7 +147,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                           ),
                           child: Text(
                             categories[index],
-                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
+                            style: TextStyle(color: kColorAlmostBlack, fontWeight: FontWeight.bold),
                           ),
                         )
                       : MouseRegion(

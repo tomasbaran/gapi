@@ -63,7 +63,7 @@ class ReviewContainer extends StatelessWidget {
                       cursor: SystemMouseCursors.click,
                       child: const Icon(
                         Icons.star,
-                        color: Colors.black87,
+                        color: kPrimaryColor2,
                       ),
                     ),
                     onRatingUpdate: (rating) {
@@ -78,7 +78,7 @@ class ReviewContainer extends StatelessWidget {
                       cursor: SystemMouseCursors.click,
                       child: const Icon(
                         Icons.star,
-                        color: Colors.black87,
+                        color: kPrimaryColor2,
                       ),
                     ),
                     onRatingUpdate: (rating) {

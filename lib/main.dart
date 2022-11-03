@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tedi',
       theme: ThemeData(
-        primaryColor: kPrimaryColor1,
+        primaryColor: kColorDarkGrey,
         appBarTheme: AppBarTheme(
-          color: kPrimaryColor1,
+          color: kColorDarkGrey,
         ),
       ),
       home: ChangeNotifierProvider(
