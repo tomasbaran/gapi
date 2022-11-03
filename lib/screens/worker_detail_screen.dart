@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gapi/model/my_globals.dart';
+import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/screens/add_review_screen.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:gapi/widgets/review_container.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'dart:async';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -76,7 +79,10 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
             builder: (BuildContext context) => AddReviewScreen(
               workerName: widget.workerName,
             ),
-          ),
+          ).whenComplete(() {
+            Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview1(0);
+            Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview2(0);
+          }),
         ),
       ),
       appBar: AppBar(title: Text(widget.categoryName)),
