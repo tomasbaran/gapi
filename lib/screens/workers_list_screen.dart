@@ -45,6 +45,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             phoneNumber: workerPhoneNumber.toString(),
             workerName: workerName.toString(),
             categoryName: workerCategory.toString(),
+            workerId: worker.key ?? 'null',
           ));
         }
       }

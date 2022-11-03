@@ -22,3 +22,6 @@ const TextStyle tsReviewValue = TextStyle(fontSize: 22, fontWeight: FontWeight.b
 const double kSizeBtwRankings = 12;
 const TextStyle tsReviewCategoryComment = TextStyle(fontSize: 14, color: Colors.white);
 const TextStyle tsReviewCategoryCommentDate = TextStyle(fontSize: 10, color: Colors.grey);
+
+// Snackbar
+const TextStyle tsSnackBarTitle = TextStyle(fontSize: 16, color: kColorAlmostBlack);

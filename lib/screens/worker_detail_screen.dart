@@ -16,7 +16,9 @@ class WorkersDetailScreen extends StatefulWidget {
   final String categoryName;
   final String phoneNumber;
   final String workerName;
-  const WorkersDetailScreen({Key? key, required this.workerName, required this.categoryName, required this.phoneNumber}) : super(key: key);
+  final String workerId;
+  const WorkersDetailScreen({Key? key, required this.workerName, required this.workerId, required this.categoryName, required this.phoneNumber})
+      : super(key: key);
 
   @override
   State<WorkersDetailScreen> createState() => _WorkersDetailScreenState();
@@ -80,6 +82,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) => AddReviewScreen(
+              workerId: widget.workerId,
               workerName: widget.workerName,
             ),
           ).whenComplete(() {

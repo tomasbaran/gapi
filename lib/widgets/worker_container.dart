@@ -8,10 +8,12 @@ class WorkerContainer extends StatelessWidget {
     required this.workerName,
     required this.categoryName,
     required this.phoneNumber,
+    required this.workerId,
   }) : super(key: key);
   final String workerName;
   final String categoryName;
   final String phoneNumber;
+  final String workerId;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class WorkerContainer extends StatelessWidget {
                     workerName: workerName,
                     categoryName: categoryName,
                     phoneNumber: phoneNumber,
+                    workerId: workerId,
                   ))),
       child: Container(
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

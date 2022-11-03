@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:gapi/screens/services/firebase.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
@@ -127,21 +128,22 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
 
                 print('workerLocation: $workerLocation');
 
-                DatabaseReference ref = FirebaseDatabase.instance.ref("workers");
-                DatabaseReference newRef = ref.push();
-
-                await newRef.set({
-                  'name': workerName,
-                  'phone': workerPhone,
-                  'category': categoryName,
-                  'location': {'location1': workerLocation},
-                });
+                FirebaseServices().addWorker(
+                  workerName,
+                  workerPhone,
+                  categoryName,
+                  workerLocation,
+                );
 
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     duration: Duration(seconds: 1),
-                    content: Text('$workerName ha sido añadido.'),
+                    content: Text(
+                      '$workerName ha sido añadido.',
+                      style: tsSnackBarTitle,
+                    ),
+                    backgroundColor: kPrimaryColor2,
                   ),
                 );
               }
