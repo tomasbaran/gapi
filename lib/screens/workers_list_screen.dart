@@ -149,14 +149,17 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                             style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
                           ),
                         )
-                      : GestureDetector(
-                          onTap: () => setState(() {
-                            selectedCategoryIndex = index;
-                            _pageController.jumpToPage(selectedCategoryIndex);
-                          }),
-                          child: Text(
-                            categories[index],
-                            style: TextStyle(color: Colors.white),
+                      : MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () => setState(() {
+                              selectedCategoryIndex = index;
+                              _pageController.jumpToPage(selectedCategoryIndex);
+                            }),
+                            child: Text(
+                              categories[index],
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                 ],

@@ -31,32 +31,35 @@ class WorkerContainer extends StatelessWidget {
             color: kPrimaryColorLight,
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    workerName,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  Text('calificaciones: 0'),
-                  Text('reseñas: 0'),
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.all(Radius.circular(8))),
-                child: const Text(
-                  '? %',
-                  style: TextStyle(
-                    color: Colors.black38,
-                    fontWeight: FontWeight.bold,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      workerName,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    Text('calificaciones: 0'),
+                    Text('reseñas: 0'),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: const Text(
+                    '? %',
+                    style: TextStyle(
+                      color: Colors.black38,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           )),
     );
   }

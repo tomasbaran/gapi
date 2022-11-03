@@ -5,6 +5,7 @@ import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/screens/add_review_screen.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
+import 'package:gapi/widgets/comment.dart';
 import 'package:gapi/widgets/review_container.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -75,6 +76,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
             size: 40,
           ),
           onPressed: () => showModalBottomSheet(
+            isScrollControlled: true,
             context: context,
             builder: (BuildContext context) => AddReviewScreen(
               workerName: widget.workerName,
@@ -136,22 +138,9 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 SizedBox(height: 24),
                 ReviewContainer(),
                 SizedBox(height: 24),
-                ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  child: Container(
-                    padding: EdgeInsets.all(12),
-                    // color: kGreen,
-                    color: Colors.black45,
-                    child: Text(
-                      'rsitenrsi aistenars airstna irsetnaisetna isetna istnairstnaisretnairstnaist airs rsetniarsent. sret irsnt aisten ars.ta setn airst arstears.t r.st ras.t.ars t. rst tts tst.',
-                      style: tsReviewCategoryComment,
-                    ),
-                  ),
-                ),
-                Text(
-                  '24.10.2022: 79%',
-                  style: tsReviewCategoryCommentDate,
-                ),
+
+                // comment
+                // Comment(),
               ]),
             ),
             Center(

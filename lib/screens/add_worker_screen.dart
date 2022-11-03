@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:gapi/theme/constants.dart';
+import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -108,7 +109,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   const SnackBar(
                     duration: Duration(seconds: 1),
                     content: Text('Hay que rellenar todos los campos.'),
-                    backgroundColor: Colors.red,
+                    backgroundColor: kColorRed,
                   ),
                 );
               } else {

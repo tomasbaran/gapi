@@ -59,9 +59,12 @@ class ReviewContainer extends StatelessWidget {
                 children: [
                   RatingBar.builder(
                     itemSize: 28,
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.black87,
+                    itemBuilder: (context, _) => MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: const Icon(
+                        Icons.star,
+                        color: Colors.black87,
+                      ),
                     ),
                     onRatingUpdate: (rating) {
                       Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview1(rating);
@@ -71,9 +74,12 @@ class ReviewContainer extends StatelessWidget {
                   SizedBox(height: kSizeBtwRankings),
                   RatingBar.builder(
                     itemSize: 28,
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.black87,
+                    itemBuilder: (context, _) => MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: const Icon(
+                        Icons.star,
+                        color: Colors.black87,
+                      ),
                     ),
                     onRatingUpdate: (rating) {
                       Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview2(rating);

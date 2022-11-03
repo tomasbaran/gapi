@@ -24,6 +24,7 @@ class AddReviewScreen extends StatelessWidget {
                 'Comment',
               ),
               TextField(
+                textCapitalization: TextCapitalization.sentences,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 decoration: InputDecoration(
@@ -32,6 +33,9 @@ class AddReviewScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        Expanded(
+          child: Container(),
         ),
         BottomButton(
             title: 'Confirmar reseña',
