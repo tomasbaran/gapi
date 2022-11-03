@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gapi/model/my_globals.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/screens/add_worker_screen.dart';
 import 'package:gapi/model/worker.dart';
@@ -62,9 +63,11 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
 
   List<Widget> defaultWidgetList = [];
   final _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: myGlobals.scaffoldKey,
       floatingActionButton: Container(
         width: 70,
         height: 70,

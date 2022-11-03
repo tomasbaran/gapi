@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/screens/workers_list_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +31,10 @@ class MyApp extends StatelessWidget {
           color: kPrimaryColor1,
         ),
       ),
-      home: WorkersListScreen(title: 'Tedi.app'),
+      home: ChangeNotifierProvider(
+        create: (_) => Review(),
+        child: WorkersListScreen(title: 'Tedi.app'),
+      ),
     );
   }
 }

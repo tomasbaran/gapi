@@ -134,7 +134,8 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   child: Container(
                     padding: EdgeInsets.all(12),
-                    color: kGreen,
+                    // color: kGreen,
+                    color: Colors.black45,
                     child: Text(
                       'rsitenrsi aistenars airstna irsetnaisetna isetna istnairstnaisretnairstnaist airs rsetniarsent. sret irsnt aisten ars.ta setn airst arstears.t r.st ras.t.ars t. rst tts tst.',
                       style: tsReviewCategoryComment,

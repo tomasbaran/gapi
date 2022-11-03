@@ -8,7 +8,7 @@ const Color kGreen = Color(0xFF9DBDBB);
 
 // worker_detail_screen.dart
 const TextStyle tsReviewCategory = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
-const TextStyle tsReviewCategoryResult = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
+const TextStyle tsReviewValue = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
 const double kSizeBtwRankings = 12;
 const TextStyle tsReviewCategoryComment = TextStyle(fontSize: 14, color: Colors.white);
 const TextStyle tsReviewCategoryCommentDate = TextStyle(fontSize: 10, color: Colors.grey);

@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:gapi/model/my_globals.dart';
+import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/theme/style_constants.dart';
+import 'package:gapi/widgets/five_star_row.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 class ReviewContainer extends StatelessWidget {
+  final bool isViewOnly;
+
   const ReviewContainer({
     Key? key,
+    this.isViewOnly = true,
   }) : super(key: key);
 
   @override
@@ -25,45 +33,79 @@ class ReviewContainer extends StatelessWidget {
             ),
           ],
         ),
-        Column(
-          children: [
-            FiveStarRow(),
-            SizedBox(height: kSizeBtwRankings),
-            FiveStarRow(),
-          ],
-        ),
+        isViewOnly
+            ? Column(
+                children: [
+                  RatingBarIndicator(
+                    rating: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
+                    itemSize: 28,
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  SizedBox(height: kSizeBtwRankings),
+                  RatingBarIndicator(
+                    rating: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                    itemSize: 28,
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              )
+            : Column(
+                children: [
+                  RatingBar.builder(
+                    itemSize: 28,
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.black87,
+                    ),
+                    onRatingUpdate: (rating) {
+                      Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview1(rating);
+                      print(rating);
+                    },
+                  ),
+                  SizedBox(height: kSizeBtwRankings),
+                  RatingBar.builder(
+                    itemSize: 28,
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.black87,
+                    ),
+                    onRatingUpdate: (rating) {
+                      Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview2(rating);
+                      print(rating);
+                    },
+                  ),
+                ],
+              ),
+        /* !isViewOnly
+            ? Container()
+            : */
         Column(
           children: [
             Text(
-              '?',
-              style: tsReviewCategoryResult,
+              Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0
+                  ? '?'
+                  : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1.toString(),
+              style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0
+                  ? tsReviewValue.copyWith(color: Colors.grey)
+                  : tsReviewValue,
             ),
             SizedBox(height: kSizeBtwRankings),
             Text(
-              '?',
-              style: tsReviewCategoryResult,
+              Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
+                  ? '?'
+                  : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2.toString(),
+              style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
+                  ? tsReviewValue.copyWith(color: Colors.grey)
+                  : tsReviewValue,
             ),
           ],
-        ),
-      ],
-    );
-  }
-}
-
-class FiveStarRow extends StatelessWidget {
-  const FiveStarRow({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(Icons.star_border_outlined),
-        Icon(Icons.star_border_outlined),
-        Icon(Icons.star_border_outlined),
-        Icon(Icons.star_border_outlined),
-        Icon(Icons.star_border_outlined),
+        )
       ],
     );
   }

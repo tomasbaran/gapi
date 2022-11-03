@@ -14,7 +14,7 @@ class AddReviewScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Añade reseña: $workerName')),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         SizedBox(height: 16),
-        ReviewContainer(),
+        ReviewContainer(isViewOnly: false),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -33,7 +33,11 @@ class AddReviewScreen extends StatelessWidget {
             ],
           ),
         ),
-        BottomButton(title: 'Confirmar reseña', onTap: () => null),
+        BottomButton(
+            title: 'Confirmar reseña',
+            onTap: () {
+              print('review1: ');
+            }),
       ]),
     );
   }
