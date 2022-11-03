@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:gapi/widgets/review_container.dart';
 
@@ -11,7 +12,16 @@ class AddReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Añade reseña: $workerName')),
+      appBar: AppBar(
+        title: Text(
+          'Añade reseña: $workerName',
+          style: TextStyle(
+            color: kColorAlmostBlack,
+          ),
+        ),
+        backgroundColor: kPrimaryColor2,
+        foregroundColor: kColorAlmostBlack,
+      ),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         SizedBox(height: 16),
         ReviewContainer(isViewOnly: false),

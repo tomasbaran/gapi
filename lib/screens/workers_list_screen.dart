@@ -7,6 +7,7 @@ import 'package:gapi/model/my_globals.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/screens/add_worker_screen.dart';
 import 'package:gapi/model/worker.dart';
+import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:gapi/widgets/worker_container.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -72,10 +73,11 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
         width: 70,
         height: 70,
         child: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: kPrimaryColor2,
           child: Icon(
             Icons.add,
             size: 40,
+            color: kColorAlmostBlack,
           ),
           onPressed: () => showModalBottomSheet(
             isScrollControlled: true,

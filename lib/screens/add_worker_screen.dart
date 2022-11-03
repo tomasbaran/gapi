@@ -37,7 +37,12 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Añade nuevo trabajador'),
+        foregroundColor: kColorAlmostBlack,
+        backgroundColor: kPrimaryColor2,
+        title: Text(
+          'Añade nuevo trabajador',
+          style: TextStyle(color: kColorAlmostBlack),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

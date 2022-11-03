@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gapi/theme/style_constants.dart';
 
 class BottomButton extends StatelessWidget {
   BottomButton({
@@ -17,12 +18,12 @@ class BottomButton extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15),
           height: 50,
           width: double.infinity,
-          color: Theme.of(context).primaryColor,
+          color: kColorAlmostBlack,
           child: Align(
             alignment: Alignment.topCenter,
             child: Text(
               title,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: kColorLightGrey),
             ),
           ),
         ),

@@ -70,10 +70,11 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
         width: 70,
         height: 70,
         child: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: kPrimaryColor2,
           child: Icon(
             Icons.star_border,
             size: 40,
+            color: kColorAlmostBlack,
           ),
           onPressed: () => showModalBottomSheet(
             isScrollControlled: true,
@@ -118,7 +119,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 ),
                 Text(
                   widget.workerName,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kColorAlmostBlack),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
@@ -189,15 +190,18 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                     });
                   },
                   child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Icon(Icons.phone),
+                    Icon(
+                      Icons.phone,
+                      color: kColorAlmostBlack,
+                    ),
                     SizedBox(width: 12),
                     Text(
                       parsedPhoneNumber,
                       // widget.phoneNumber,
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20, color: kColorAlmostBlack),
                     ),
                     SizedBox(width: 12),
-                    Icon(Icons.copy),
+                    Icon(Icons.copy, color: kColorAlmostBlack),
                   ]),
                 ),
               ),

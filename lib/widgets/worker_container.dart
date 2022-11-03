@@ -28,7 +28,7 @@ class WorkerContainer extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: kPrimaryColorLight,
+            color: kColorLightGrey,
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           child: MouseRegion(
@@ -41,7 +41,7 @@ class WorkerContainer extends StatelessWidget {
                   children: [
                     Text(
                       workerName,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: kColorAlmostBlack),
                     ),
                     Text('calificaciones: 0'),
                     Text('reseñas: 0'),
