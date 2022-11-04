@@ -54,7 +54,50 @@ class FirebaseServices {
       });
   }
 
-  accumulateReviewToWorker(
+  double calcRelevancy(double ranking, int ratingsCount) {
+    // 100 (1 review): 10
+    // 100 (2): 20
+    // 100 (9): 90
+    // 100 (10): 100
+    if (ratingsCount < 10) {
+      ranking = ranking / 10 * ratingsCount;
+    }
+    return ranking;
+  }
+
+  double calcRating(double readRating, double newRating) {
+    double output;
+    // penalty for an extremely bad rating of value 1
+    if (newRating < 4) {
+      output = readRating + newRating - 3;
+    } else {
+      output = readRating + newRating;
+    }
+
+    return output;
+  }
+
+  int calcRanking(double ratingsSum, int ratingsCount) {
+    double avgRating = ratingsSum / ratingsCount;
+
+    // example
+    // 10	-> 100  4
+    // 8	-> 50	  2
+    // 6	-> 0		0
+    // 4	-> -50	-2
+    // 2	-> -100	-4
+    avgRating = (avgRating - 6) * 25;
+
+    avgRating = calcRelevancy(avgRating, ratingsCount);
+
+    if (avgRating < -100) {
+      avgRating = -100;
+    }
+
+    return avgRating.toInt();
+  }
+
+  writeOverallRatings(
     String workerId,
     double rating1,
     double rating2,
@@ -72,18 +115,59 @@ class FirebaseServices {
       int readRanking = snapshot.snapshot.value['ranking'];
       print('$readRatingsSum, $readRatingsCount, $readRanking');
 
-      newRatingsSum += readRatingsSum;
+      double updatedRatingsSum = calcRating(readRatingsSum.toDouble(), newRatingsSum);
+
+      int newRanking = calcRanking(updatedRatingsSum, ++readRatingsCount);
+
+      await ref.update({'ratings_sum': updatedRatingsSum});
+      await ref.update({'ratings_count': readRatingsCount++});
+      await ref.update({'ranking': newRanking});
+    } else {
+      double updatedRatingsSum = calcRating(0, newRatingsSum);
+      int ranking = calcRanking(newRatingsSum, 1);
+
+      await ref.update({'ratings_sum': updatedRatingsSum});
+      await ref.update({'ratings_count': 1});
+      await ref.update({'ranking': ranking});
+    }
+  }
+
+  writeRating1(
+    String workerId,
+    double rating1,
+  ) async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('rating1');
+
+    double newRatingsSum = rating1;
+
+    final ratingSumSnapshot = await ref.child('ratings_sum').get();
+    if (ratingSumSnapshot.exists) {
+      final dynamic snapshot = await ref.once();
+
+      int readRatingsSum = snapshot.snapshot.value['ratings_sum'];
+      int readRatingsCount = snapshot.snapshot.value['ratings_count'];
+      int readRanking = snapshot.snapshot.value['ranking'];
+      print('$readRatingsSum, $readRatingsCount, $readRanking');
+
       int newRating = ((newRatingsSum / ++readRatingsCount) * 10).toInt();
 
       await ref.update({'ratings_sum': newRatingsSum});
       await ref.update({'ratings_count': readRatingsCount++});
       await ref.update({'ranking': newRating});
     } else {
-      double ranking = newRatingsSum / 1 * 10;
+      double ranking = newRatingsSum / 1;
 
       await ref.update({'ratings_sum': newRatingsSum});
       await ref.update({'ratings_count': 1});
       await ref.update({'ranking': ranking});
     }
+  }
+
+  assignAllRatingsToWorkers(
+    String workerId,
+    double rating1,
+    double rating2,
+  ) {
+    writeOverallRatings(workerId, rating1, rating2);
   }
 }

@@ -76,7 +76,7 @@ class AddReviewScreen extends StatelessWidget {
                     rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
                     rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
                   );
-                  FirebaseServices().accumulateReviewToWorker(
+                  FirebaseServices().assignAllRatingsToWorkers(
                     workerId,
                     Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
                     Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
@@ -88,7 +88,7 @@ class AddReviewScreen extends StatelessWidget {
                     rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
                     comment: comment,
                   );
-                  FirebaseServices().accumulateReviewToWorker(
+                  FirebaseServices().assignAllRatingsToWorkers(
                     workerId,
                     Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
                     Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
