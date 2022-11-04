@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gapi/model/my_globals.dart';
+import 'package:gapi/screens/services/firebase_services.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:gapi/widgets/review_container.dart';
@@ -56,11 +57,56 @@ class AddReviewScreen extends StatelessWidget {
             title: 'Confirmar reseña',
             onTap: () {
               print('workerId: $workerId');
-              print('date: ${DateTime.now()}');
               print('review1: ${Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1}');
               print('review2: ${Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2}');
-              if (comment != null) {
-                print('comment: $comment');
+
+              if (Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0 ||
+                  Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    duration: Duration(seconds: 1),
+                    content: Text('Hay que calificar todas cualidades.'),
+                    backgroundColor: kColorRed,
+                  ),
+                );
+              } else {
+                if (comment == null) {
+                  FirebaseServices().addReview(
+                    workerId: workerId,
+                    rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
+                    rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                  );
+                  FirebaseServices().accumulateReviewToWorker(
+                    workerId,
+                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
+                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                  );
+                } else {
+                  FirebaseServices().addReview(
+                    workerId: workerId,
+                    rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
+                    rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                    comment: comment,
+                  );
+                  FirebaseServices().accumulateReviewToWorker(
+                    workerId,
+                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
+                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                  );
+                }
+                Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview1(0);
+                Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview2(0);
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(seconds: 1),
+                    content: Text(
+                      'Tu reseña ha sido añadida.',
+                      style: tsSnackBarTitle,
+                    ),
+                    backgroundColor: kPrimaryColor2,
+                  ),
+                );
               }
             }),
       ]),

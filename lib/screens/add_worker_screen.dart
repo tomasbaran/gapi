@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:gapi/screens/services/firebase.dart';
+import 'package:gapi/screens/services/firebase_services.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
