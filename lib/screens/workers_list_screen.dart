@@ -39,6 +39,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
         final workerName = worker.child('name').value;
         final workerPhoneNumber = worker.child('phone').value;
         final workerCategory = worker.child('category').value;
+        final workerRanking = worker.child('overall_rating/ranking').value;
 
         if (workerCategory.toString() == categories[selectedCategoryIndex]) {
           output.add(WorkerContainer(
@@ -46,6 +47,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             workerName: workerName.toString(),
             categoryName: workerCategory.toString(),
             workerId: worker.key ?? 'null',
+            workerRanking: workerRanking.toString(),
           ));
         }
       }

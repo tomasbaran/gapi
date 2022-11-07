@@ -17,8 +17,15 @@ class WorkersDetailScreen extends StatefulWidget {
   final String phoneNumber;
   final String workerName;
   final String workerId;
-  const WorkersDetailScreen({Key? key, required this.workerName, required this.workerId, required this.categoryName, required this.phoneNumber})
-      : super(key: key);
+  final String workerRanking;
+  const WorkersDetailScreen({
+    Key? key,
+    required this.workerName,
+    required this.workerId,
+    required this.categoryName,
+    required this.phoneNumber,
+    required this.workerRanking,
+  }) : super(key: key);
 
   @override
   State<WorkersDetailScreen> createState() => _WorkersDetailScreenState();
@@ -106,15 +113,27 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                     child: Container(
                       margin: EdgeInsets.all(32),
                       decoration: BoxDecoration(
-                        color: Colors.black12,
+                        color: widget.workerRanking == 'null'
+                            ? Colors.white70
+                            : widget.workerRanking.characters.first == '-'
+                                ? kColorRed
+                                : kPrimaryColor2,
                         borderRadius: BorderRadius.all(
                           Radius.circular(20),
                         ),
                       ),
                       child: Center(
                         child: Text(
-                          '? %',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
+                          widget.workerRanking == 'null' ? '?' : widget.workerRanking + ' %',
+                          style: TextStyle(
+                            color: widget.workerRanking == 'null'
+                                ? Colors.black38
+                                : widget.workerRanking.characters.first == '-'
+                                    ? Colors.white
+                                    : kColorAlmostBlack,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32,
+                          ),
                         ),
                       ),
                     ),

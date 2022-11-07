@@ -9,11 +9,13 @@ class WorkerContainer extends StatelessWidget {
     required this.categoryName,
     required this.phoneNumber,
     required this.workerId,
+    required this.workerRanking,
   }) : super(key: key);
   final String workerName;
   final String categoryName;
   final String phoneNumber;
   final String workerId;
+  final String workerRanking;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class WorkerContainer extends StatelessWidget {
                     categoryName: categoryName,
                     phoneNumber: phoneNumber,
                     workerId: workerId,
+                    workerRanking: workerRanking,
                   ))),
       child: Container(
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -39,24 +42,43 @@ class WorkerContainer extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      workerName,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: kColorAlmostBlack),
-                    ),
-                    Text('calificaciones: 0'),
-                    Text('reseñas: 0'),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        workerName,
+                        maxLines: 1,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        style: tsWorkerContainerTitle,
+                      ),
+                      Text('calificaciones: 0'),
+                      Text('reseñas: 0'),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  width: 16,
                 ),
                 Container(
                   padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.all(Radius.circular(8))),
-                  child: const Text(
-                    '? %',
+                  decoration: BoxDecoration(
+                    color: workerRanking == 'null'
+                        ? Colors.white70
+                        : workerRanking.characters.first == '-'
+                            ? kColorRed
+                            : kPrimaryColor2,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
+                  child: Text(
+                    workerRanking == 'null' ? '?' : workerRanking + ' %',
                     style: TextStyle(
-                      color: Colors.black38,
+                      color: workerRanking == 'null'
+                          ? Colors.black38
+                          : workerRanking.characters.first == '-'
+                              ? Colors.white
+                              : kColorAlmostBlack,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
