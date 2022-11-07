@@ -8,9 +8,13 @@ import 'package:provider/provider.dart';
 
 class ReviewContainer extends StatelessWidget {
   final bool isViewOnly;
+  final String? rating1;
+  final String? rating2;
 
   const ReviewContainer({
     Key? key,
+    this.rating1,
+    this.rating2,
     this.isViewOnly = true,
   }) : super(key: key);
 
@@ -37,7 +41,7 @@ class ReviewContainer extends StatelessWidget {
             ? Column(
                 children: [
                   RatingBarIndicator(
-                    rating: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
+                    rating: double.parse(rating1 ?? '0'), // Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
                     itemSize: 28,
                     itemBuilder: (context, _) => Icon(
                       Icons.star,
@@ -88,30 +92,29 @@ class ReviewContainer extends StatelessWidget {
                   ),
                 ],
               ),
-        /* !isViewOnly
+        !isViewOnly
             ? Container()
-            : */
-        Column(
-          children: [
-            Text(
-              Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0
-                  ? '?'
-                  : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1.toString(),
-              style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0
-                  ? tsReviewValue.copyWith(color: Colors.grey)
-                  : tsReviewValue,
-            ),
-            SizedBox(height: kSizeBtwRankings),
-            Text(
-              Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
-                  ? '?'
-                  : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2.toString(),
-              style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
-                  ? tsReviewValue.copyWith(color: Colors.grey)
-                  : tsReviewValue,
-            ),
-          ],
-        )
+            : Column(
+                children: [
+                  Text(
+                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0
+                        ? rating1.toString()
+                        : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1.toString(),
+                    style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0
+                        ? tsReviewValue.copyWith(color: kColorAlmostBlack)
+                        : tsReviewValue,
+                  ),
+                  SizedBox(height: kSizeBtwRankings),
+                  Text(
+                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
+                        ? '?'
+                        : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2.toString(),
+                    style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
+                        ? tsReviewValue.copyWith(color: Colors.grey)
+                        : tsReviewValue,
+                  ),
+                ],
+              )
       ],
     );
   }

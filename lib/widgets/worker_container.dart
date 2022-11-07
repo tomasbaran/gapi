@@ -11,6 +11,8 @@ class WorkerContainer extends StatelessWidget {
     required this.workerId,
     required this.workerRanking,
     this.workerAllRatingsCount,
+    this.rating1,
+    this.rating2,
   }) : super(key: key);
   final String workerName;
   final String categoryName;
@@ -18,6 +20,8 @@ class WorkerContainer extends StatelessWidget {
   final String workerId;
   final String workerRanking;
   final String? workerAllRatingsCount;
+  final String? rating1;
+  final String? rating2;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,8 @@ class WorkerContainer extends StatelessWidget {
                     phoneNumber: phoneNumber,
                     workerId: workerId,
                     workerRanking: workerRanking,
+                    rating1: rating1,
+                    rating2: rating2,
                   ))),
       child: Container(
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

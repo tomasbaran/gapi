@@ -56,12 +56,11 @@ class FirebaseServices {
   }
 
   List<Worker> sortByRanking(DataSnapshot snapshot) {
-    List<Worker> orderedWorkers = [];
     List<Worker> unorderedWorkers = [];
     Worker newWorker;
 
     for (var worker in snapshot.children) {
-      print("- snapshot worker: ${worker.child('name').value}: ${worker.child('overall_rating/ratings_count').value}: ");
+      print("- snapshot worker: ${worker.child('name').value}: ${worker.child('rating1/avg_rating').value}");
       newWorker = Worker(
         key: worker.key ?? 'null',
         category: worker.child('category').value ?? 'null',
@@ -70,6 +69,7 @@ class FirebaseServices {
         ranking: worker.child('overall_rating/ranking').value == null ? 0 : int.parse(worker.child('overall_rating/ranking').value.toString()),
         ratingsCount:
             worker.child('overall_rating/ratings_count').value == null ? 0 : int.parse(worker.child('overall_rating/ratings_count').value.toString()),
+        avg_rating1: worker.child('rating1/avg_rating').exists ? double.parse(worker.child('rating1/avg_rating').value.toString()) : 0,
       );
       unorderedWorkers.add(newWorker);
     }
@@ -165,28 +165,27 @@ class FirebaseServices {
   ) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('rating1');
 
-    double newRatingsSum = rating1;
+    final ratingSumSnapshot = await ref.get();
 
-    final ratingSumSnapshot = await ref.child('ratings_sum').get();
     if (ratingSumSnapshot.exists) {
       final dynamic snapshot = await ref.once();
 
       int readRatingsSum = snapshot.snapshot.value['ratings_sum'];
       int readRatingsCount = snapshot.snapshot.value['ratings_count'];
-      int readRanking = snapshot.snapshot.value['ranking'];
-      print('$readRatingsSum, $readRatingsCount, $readRanking');
 
-      int newRating = ((newRatingsSum / ++readRatingsCount) * 10).toInt();
+      print('$readRatingsSum, $readRatingsCount');
+
+      int newRatingsSum = readRatingsSum + rating1.toInt();
+
+      double newAvgRating = (newRatingsSum / ++readRatingsCount);
 
       await ref.update({'ratings_sum': newRatingsSum});
       await ref.update({'ratings_count': readRatingsCount++});
-      await ref.update({'ranking': newRating});
+      await ref.update({'avg_rating': newAvgRating});
     } else {
-      double ranking = newRatingsSum / 1;
-
-      await ref.update({'ratings_sum': newRatingsSum});
+      await ref.update({'ratings_sum': rating1});
       await ref.update({'ratings_count': 1});
-      await ref.update({'ranking': ranking});
+      await ref.update({'avg_rating': rating1});
     }
   }
 
@@ -196,5 +195,6 @@ class FirebaseServices {
     double rating2,
   ) {
     writeOverallRatings(workerId, rating1, rating2);
+    writeRating1(workerId, rating1);
   }
 }

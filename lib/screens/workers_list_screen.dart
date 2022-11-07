@@ -43,6 +43,8 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
         final workerCategory = worker.category;
         final workerRanking = worker.ranking;
         final workerAllRatingsCount = worker.ratingsCount;
+        final rating1 = worker.avg_rating1;
+        final rating2 = worker.avg_rating2;
         print('worker: ${worker.name} ${worker.ratingsCount}');
 
         if (workerCategory.toString() == categories[selectedCategoryIndex]) {
@@ -53,7 +55,10 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             workerId: worker.key,
             workerRanking: workerRanking.toString(),
             workerAllRatingsCount: workerAllRatingsCount == null ? null : workerAllRatingsCount.toString(),
+            rating1: rating1 == null ? null : worker.avg_rating1!.toStringAsFixed(1),
           ));
+          print('rating1: ${rating1}');
+          print('rating1: ${output.last.rating1}');
         }
       }
 

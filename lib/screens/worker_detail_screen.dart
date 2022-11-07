@@ -18,6 +18,8 @@ class WorkersDetailScreen extends StatefulWidget {
   final String workerName;
   final String workerId;
   final String workerRanking;
+  final String? rating1;
+  final String? rating2;
   const WorkersDetailScreen({
     Key? key,
     required this.workerName,
@@ -25,6 +27,8 @@ class WorkersDetailScreen extends StatefulWidget {
     required this.categoryName,
     required this.phoneNumber,
     required this.workerRanking,
+    this.rating1,
+    this.rating2,
   }) : super(key: key);
 
   @override
@@ -159,7 +163,10 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   ],
                 ),
                 SizedBox(height: 24),
-                ReviewContainer(),
+                ReviewContainer(
+                  rating1: widget.rating1,
+                  rating2: widget.rating2,
+                ),
                 SizedBox(height: 24),
 
                 // comment
