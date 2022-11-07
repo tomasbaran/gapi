@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gapi/model/my_globals.dart';
+import 'package:gapi/screens/services/firebase_services.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/screens/add_worker_screen.dart';
 import 'package:gapi/model/worker.dart';
@@ -30,30 +31,32 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
 
     FirebaseDatabase database = FirebaseDatabase.instance;
 
-    final ref = FirebaseDatabase.instance.ref();
-    final snapshot = await ref.child('workers').get();
-    if (snapshot.exists) {
-      // List<Worker> workers = [];
+    final ref = database.ref().child('workers');
+    final snapshot = await ref.get();
 
-      for (var worker in snapshot.children) {
-        final workerName = worker.child('name').value;
-        final workerPhoneNumber = worker.child('phone').value;
-        final workerCategory = worker.child('category').value;
-        final workerRanking = worker.child('overall_rating/ranking').value;
-        final workerAllRatingsCount = worker.child('overall_rating/ratings_count').value;
+    if (snapshot.exists) {
+      List<Worker> orderedWorkers = FirebaseServices().sortByRanking(snapshot);
+
+      for (var worker in orderedWorkers) {
+        final workerName = worker.name;
+        final workerPhoneNumber = worker.phoneNumber;
+        final workerCategory = worker.category;
+        final workerRanking = worker.ranking;
+        final workerAllRatingsCount = worker.ratingsCount;
+        print('worker: ${worker.name} ${worker.ratingsCount}');
 
         if (workerCategory.toString() == categories[selectedCategoryIndex]) {
           output.add(WorkerContainer(
             phoneNumber: workerPhoneNumber.toString(),
             workerName: workerName.toString(),
             categoryName: workerCategory.toString(),
-            workerId: worker.key ?? 'null',
+            workerId: worker.key,
             workerRanking: workerRanking.toString(),
             workerAllRatingsCount: workerAllRatingsCount == null ? null : workerAllRatingsCount.toString(),
           ));
         }
       }
-      print(snapshot.children.length);
+
       if (!countedWorkers) {
         setState(() {
           workersCounter = snapshot.children.length;
@@ -101,9 +104,10 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(widget.title, style: tsMainAppBarTitle),
-                  Text(': servicios del hogar', style: tsMainAppBarSubtitle),
+                  const Expanded(child: Text(': servicios del hogar', style: tsMainAppBarSubtitle)),
                 ],
               ),
               const SizedBox(height: 4),

@@ -66,7 +66,7 @@ class WorkerContainer extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: workerRanking == 'null'
+                    color: workerAllRatingsCount == '0'
                         ? Colors.white70
                         : workerRanking.characters.first == '-'
                             ? kColorRed
@@ -74,9 +74,9 @@ class WorkerContainer extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(8)),
                   ),
                   child: Text(
-                    workerRanking == 'null' ? '?' : workerRanking + ' %',
+                    workerAllRatingsCount == '0' ? '?' : workerRanking + ' %',
                     style: TextStyle(
-                      color: workerRanking == 'null'
+                      color: workerAllRatingsCount == '0'
                           ? Colors.black38
                           : workerRanking.characters.first == '-'
                               ? Colors.white

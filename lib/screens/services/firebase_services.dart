@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:gapi/model/worker.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
@@ -52,6 +53,32 @@ class FirebaseServices {
         'comment': comment,
         'date': formattedDate,
       });
+  }
+
+  List<Worker> sortByRanking(DataSnapshot snapshot) {
+    List<Worker> orderedWorkers = [];
+    List<Worker> unorderedWorkers = [];
+    Worker newWorker;
+
+    for (var worker in snapshot.children) {
+      print("- snapshot worker: ${worker.child('name').value}: ${worker.child('overall_rating/ratings_count').value}: ");
+      newWorker = Worker(
+        key: worker.key ?? 'null',
+        category: worker.child('category').value ?? 'null',
+        name: worker.child('name').value ?? 'null',
+        phoneNumber: worker.child('phone').value ?? 'null',
+        ranking: worker.child('overall_rating/ranking').value == null ? 0 : int.parse(worker.child('overall_rating/ranking').value.toString()),
+        ratingsCount:
+            worker.child('overall_rating/ratings_count').value == null ? 0 : int.parse(worker.child('overall_rating/ratings_count').value.toString()),
+      );
+      unorderedWorkers.add(newWorker);
+    }
+
+    unorderedWorkers.sort(((a, b) {
+      return b.ranking!.compareTo(a.ranking!);
+    }));
+
+    return unorderedWorkers;
   }
 
   double calcRelevancy(double ranking, int ratingsCount) {

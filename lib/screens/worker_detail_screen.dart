@@ -113,7 +113,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                     child: Container(
                       margin: EdgeInsets.all(32),
                       decoration: BoxDecoration(
-                        color: widget.workerRanking == 'null'
+                        color: widget.workerRanking == '0'
                             ? Colors.white70
                             : widget.workerRanking.characters.first == '-'
                                 ? kColorRed
@@ -124,9 +124,9 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          widget.workerRanking == 'null' ? '?' : widget.workerRanking + ' %',
+                          widget.workerRanking == '0' ? '?' : widget.workerRanking + ' %',
                           style: TextStyle(
-                            color: widget.workerRanking == 'null'
+                            color: widget.workerRanking == '0'
                                 ? Colors.black38
                                 : widget.workerRanking.characters.first == '-'
                                     ? Colors.white

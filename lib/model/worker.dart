@@ -1,7 +1,17 @@
 class Worker {
-  String? category;
-  String? name;
-  String? phoneNumber;
+  String key;
+  Object category;
+  Object name;
+  Object phoneNumber;
+  int? ranking;
+  int? ratingsCount;
 
-  Worker({this.category, this.name, this.phoneNumber});
+  Worker({
+    required this.key,
+    required this.category,
+    required this.name,
+    required this.phoneNumber,
+    this.ranking,
+    this.ratingsCount,
+  });
 }

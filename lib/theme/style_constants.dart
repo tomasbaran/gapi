@@ -14,7 +14,7 @@ const Color kColorAlmostBlack = Color(0xFF212121);
 
 //
 const TextStyle tsMainAppBarTitle = TextStyle(color: kPrimaryColor2, fontWeight: FontWeight.w800, fontSize: 26);
-const TextStyle tsMainAppBarSubtitle = TextStyle(color: kColorLightGrey, fontWeight: FontWeight.w300, fontSize: 26);
+const TextStyle tsMainAppBarSubtitle = TextStyle(color: kColorLightGrey, fontWeight: FontWeight.w300, fontSize: 20);
 
 // workerContainer
 const TextStyle tsWorkerContainerTitle = TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: kColorAlmostBlack);
