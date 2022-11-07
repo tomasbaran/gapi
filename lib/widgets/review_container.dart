@@ -41,7 +41,7 @@ class ReviewContainer extends StatelessWidget {
             ? Column(
                 children: [
                   RatingBarIndicator(
-                    rating: double.parse(rating1 ?? '0'), // Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
+                    rating: double.parse(rating1 ?? '0'),
                     itemSize: 28,
                     itemBuilder: (context, _) => Icon(
                       Icons.star,
@@ -50,7 +50,7 @@ class ReviewContainer extends StatelessWidget {
                   ),
                   SizedBox(height: kSizeBtwRankings),
                   RatingBarIndicator(
-                    rating: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                    rating: double.parse(rating2 ?? '0'),
                     itemSize: 28,
                     itemBuilder: (context, _) => Icon(
                       Icons.star,
@@ -107,10 +107,10 @@ class ReviewContainer extends StatelessWidget {
                   SizedBox(height: kSizeBtwRankings),
                   Text(
                     Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
-                        ? '?'
+                        ? rating2.toString()
                         : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2.toString(),
                     style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
-                        ? tsReviewValue.copyWith(color: Colors.grey)
+                        ? tsReviewValue.copyWith(color: kColorAlmostBlack)
                         : tsReviewValue,
                   ),
                 ],

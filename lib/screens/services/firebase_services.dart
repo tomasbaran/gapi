@@ -70,6 +70,7 @@ class FirebaseServices {
         ratingsCount:
             worker.child('overall_rating/ratings_count').value == null ? 0 : int.parse(worker.child('overall_rating/ratings_count').value.toString()),
         avg_rating1: worker.child('rating1/avg_rating').exists ? double.parse(worker.child('rating1/avg_rating').value.toString()) : 0,
+        avg_rating2: worker.child('rating2/avg_rating').exists ? double.parse(worker.child('rating2/avg_rating').value.toString()) : 0,
       );
       unorderedWorkers.add(newWorker);
     }
@@ -159,11 +160,12 @@ class FirebaseServices {
     }
   }
 
-  writeRating1(
+  writeRating(
     String workerId,
-    double rating1,
+    double rating,
+    String ratingId,
   ) async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('rating1');
+    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('rating' + ratingId);
 
     final ratingSumSnapshot = await ref.get();
 
@@ -175,7 +177,7 @@ class FirebaseServices {
 
       print('$readRatingsSum, $readRatingsCount');
 
-      int newRatingsSum = readRatingsSum + rating1.toInt();
+      int newRatingsSum = readRatingsSum + rating.toInt();
 
       double newAvgRating = (newRatingsSum / ++readRatingsCount);
 
@@ -183,9 +185,9 @@ class FirebaseServices {
       await ref.update({'ratings_count': readRatingsCount++});
       await ref.update({'avg_rating': newAvgRating});
     } else {
-      await ref.update({'ratings_sum': rating1});
+      await ref.update({'ratings_sum': rating});
       await ref.update({'ratings_count': 1});
-      await ref.update({'avg_rating': rating1});
+      await ref.update({'avg_rating': rating});
     }
   }
 
@@ -195,6 +197,7 @@ class FirebaseServices {
     double rating2,
   ) {
     writeOverallRatings(workerId, rating1, rating2);
-    writeRating1(workerId, rating1);
+    writeRating(workerId, rating1, '1');
+    writeRating(workerId, rating2, '2');
   }
 }

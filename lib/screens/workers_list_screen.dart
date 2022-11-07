@@ -55,10 +55,11 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             workerId: worker.key,
             workerRanking: workerRanking.toString(),
             workerAllRatingsCount: workerAllRatingsCount == null ? null : workerAllRatingsCount.toString(),
-            rating1: rating1 == null ? null : worker.avg_rating1!.toStringAsFixed(1),
+            rating1: rating1 == null ? null : worker.avg_rating1.toStringAsFixed(1),
+            rating2: rating2 == null ? null : worker.avg_rating2!.toStringAsFixed(1),
           ));
-          print('rating1: ${rating1}');
-          print('rating1: ${output.last.rating1}');
+          print('rating2: ${rating2}');
+          print('rating2: ${output.last.rating2}');
         }
       }
 

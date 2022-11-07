@@ -36,7 +36,7 @@ class AddReviewScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Comment',
+                'Comentario',
               ),
               TextField(
                 onChanged: (value) => comment = value,
