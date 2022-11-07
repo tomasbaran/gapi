@@ -10,12 +10,14 @@ class WorkerContainer extends StatelessWidget {
     required this.phoneNumber,
     required this.workerId,
     required this.workerRanking,
+    this.workerAllRatingsCount,
   }) : super(key: key);
   final String workerName;
   final String categoryName;
   final String phoneNumber;
   final String workerId;
   final String workerRanking;
+  final String? workerAllRatingsCount;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class WorkerContainer extends StatelessWidget {
                         softWrap: false,
                         style: tsWorkerContainerTitle,
                       ),
-                      Text('calificaciones: 0'),
+                      Text('calificaciones: ' + (workerAllRatingsCount == null ? '0' : workerAllRatingsCount.toString())),
                       Text('reseñas: 0'),
                     ],
                   ),
