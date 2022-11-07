@@ -49,7 +49,7 @@ class WorkerContainer extends StatelessWidget {
                       Text(
                         workerName,
                         maxLines: 1,
-                        overflow: TextOverflow.fade,
+                        overflow: TextOverflow.ellipsis,
                         softWrap: false,
                         style: tsWorkerContainerTitle,
                       ),
