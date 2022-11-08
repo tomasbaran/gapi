@@ -118,6 +118,14 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                     backgroundColor: kColorRed,
                   ),
                 );
+              } else if (workerPhone.characters.first != '9') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    duration: Duration(seconds: 3),
+                    content: Text('El número de teléfono no está correcto.'),
+                    backgroundColor: kColorRed,
+                  ),
+                );
               } else {
                 print('category: $categoryName');
                 print('workerName: $workerName');
