@@ -57,11 +57,11 @@ class AddReviewScreen extends StatelessWidget {
             title: 'Confirmar reseña',
             onTap: () {
               print('workerId: $workerId');
-              print('review1: ${Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1}');
-              print('review2: ${Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2}');
+              print('review1: ${Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1}');
+              print('review2: ${Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2}');
 
-              if (Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0 ||
-                  Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0) {
+              if (Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1 == 0 ||
+                  Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2 == 0) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     duration: Duration(seconds: 1),
@@ -71,27 +71,29 @@ class AddReviewScreen extends StatelessWidget {
                 );
               } else {
                 if (comment == null) {
-                  FirebaseServices().addReview(
+                  FirebaseServices().writeReviewToReviewOnFirebase(
                     workerId: workerId,
-                    rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
-                    rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                    rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1,
+                    rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2,
                   );
-                  FirebaseServices().assignAllRatingsToWorkers(
-                    workerId,
-                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
-                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                  FirebaseServices().writeReviewToWorkerOnFirebase(
+                    workerId: workerId,
+                    rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1,
+                    rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2,
                   );
                 } else {
-                  FirebaseServices().addReview(
+                  print('commentarios: $comment');
+                  FirebaseServices().writeReviewToReviewOnFirebase(
                     workerId: workerId,
-                    rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
-                    rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                    rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1,
+                    rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2,
                     comment: comment,
                   );
-                  FirebaseServices().assignAllRatingsToWorkers(
-                    workerId,
-                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1,
-                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2,
+                  FirebaseServices().writeReviewToWorkerOnFirebase(
+                    workerId: workerId,
+                    rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1,
+                    rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2,
+                    comment: comment,
                   );
                 }
                 Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview1(0);

@@ -10,7 +10,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:intl/intl.dart';
 
 class FirebaseServices {
-  addWorker(
+  writeWorkerToWorkerOnFirebase(
     String? workerName,
     String workerPhone,
     String? categoryName,
@@ -27,7 +27,31 @@ class FirebaseServices {
     });
   }
 
-  addReview({
+  writeReviewToWorkerOnFirebase({
+    String? workerId,
+    double? rating1,
+    double? rating2,
+    String? comment,
+  }) {
+    if (workerId != null && rating1 != null && rating2 != null) {
+      writeOverallRatings(workerId, rating1, rating2);
+      writeRating(workerId, rating1, '1');
+      writeRating(workerId, rating2, '2');
+    }
+    if (workerId != null && comment != null) {
+      writeCommentToWorkerOnFirebase(comment, workerId);
+    }
+  }
+
+  writeCommentToWorkerOnFirebase(String comment, String workerId) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd-hh-mm').format(now);
+
+    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('comment');
+    ref.update({formattedDate: comment});
+  }
+
+  writeReviewToReviewOnFirebase({
     required String workerId,
     required double rating1,
     required double rating2,
@@ -189,15 +213,5 @@ class FirebaseServices {
       await ref.update({'ratings_count': 1});
       await ref.update({'avg_rating': rating});
     }
-  }
-
-  assignAllRatingsToWorkers(
-    String workerId,
-    double rating1,
-    double rating2,
-  ) {
-    writeOverallRatings(workerId, rating1, rating2);
-    writeRating(workerId, rating1, '1');
-    writeRating(workerId, rating2, '2');
   }
 }

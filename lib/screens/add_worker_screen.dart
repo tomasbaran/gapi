@@ -128,7 +128,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
 
                 print('workerLocation: $workerLocation');
 
-                FirebaseServices().addWorker(
+                FirebaseServices().writeWorkerToWorkerOnFirebase(
                   workerName,
                   workerPhone,
                   categoryName,

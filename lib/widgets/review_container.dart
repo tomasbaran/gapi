@@ -97,19 +97,19 @@ class ReviewContainer extends StatelessWidget {
             : Column(
                 children: [
                   Text(
-                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0
+                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1 == 0
                         ? rating1.toString()
-                        : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1.toString(),
-                    style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review1 == 0
+                        : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1.toString(),
+                    style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1 == 0
                         ? tsReviewValue.copyWith(color: kColorAlmostBlack)
                         : tsReviewValue,
                   ),
                   SizedBox(height: kSizeBtwRankings),
                   Text(
-                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
+                    Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2 == 0
                         ? rating2.toString()
-                        : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2.toString(),
-                    style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).review2 == 0
+                        : Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2.toString(),
+                    style: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2 == 0
                         ? tsReviewValue.copyWith(color: kColorAlmostBlack)
                         : tsReviewValue,
                   ),
