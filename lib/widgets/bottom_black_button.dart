@@ -18,13 +18,13 @@ class BottomButton extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15),
           height: 50,
           width: double.infinity,
-          color: kPrimaryColor2,
+          color: kColorAlmostBlack,
           child: Align(
             alignment: Alignment.topCenter,
             child: Text(
               title.toUpperCase(),
               style: TextStyle(
-                color: kColorAlmostBlack,
+                color: kPrimaryColor2,
                 fontWeight: FontWeight.bold,
               ),
             ),
