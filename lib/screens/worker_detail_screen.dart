@@ -214,7 +214,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   rating1: widget.rating1,
                   rating2: widget.rating2,
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 16),
                 for (var comment in widget.comments)
                   Comment(
                     commentBody: comment.body,
@@ -223,6 +223,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   ),
               ]),
             ),
+            const SizedBox(height: 8),
             GestureDetector(
               onTap: () async {
                 final link = WhatsAppUnilink(
@@ -247,20 +248,23 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 // print(launchUrl(Uri.parse(link.toString())).ca);
               },
               child: Container(
-                padding: EdgeInsets.all(16),
-                width: 260,
+                padding: EdgeInsets.all(10),
+                width: 240,
                 decoration: BoxDecoration(
-                  color: kPrimaryColor2,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  border: Border.all(width: 2.5, color: kPrimaryColor2),
+                  // color: Colors.grey.shade300,
+                  // color: kColorAlmostBlack,
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(
                       Icons.whatsapp,
-                      size: 24,
-                      color: kColorAlmostBlack,
+                      size: 30,
+                      color: kPrimaryColor2,
                     ),
+                    const SizedBox(width: 12),
                     Text(
                       'Envía un whatsapp',
                       style: tsCtaWhatsapp,
@@ -269,7 +273,6 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -332,7 +335,6 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
           ],
         ),
       ),
