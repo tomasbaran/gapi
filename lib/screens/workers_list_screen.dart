@@ -48,6 +48,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
         final workerCategory = worker.category;
         final workerRanking = worker.ranking;
         final workerAllRatingsCount = worker.ratingsCount;
+        final workerAllCommentsCount = worker.commentsCount;
         final rating1 = worker.avg_rating1;
         final rating2 = worker.avg_rating2;
         final comments = worker.comments;
@@ -61,6 +62,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             workerId: worker.key,
             workerRanking: workerRanking.toString(),
             workerAllRatingsCount: workerAllRatingsCount == null ? null : workerAllRatingsCount.toString(),
+            workerAllCommentsCount: workerAllCommentsCount == null ? null : workerAllCommentsCount.toString(),
             rating1: rating1 == null ? null : worker.avg_rating1.toStringAsFixed(1),
             rating2: rating2 == null ? null : worker.avg_rating2!.toStringAsFixed(1),
             comments: comments,

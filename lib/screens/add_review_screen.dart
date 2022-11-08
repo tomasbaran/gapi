@@ -101,9 +101,9 @@ class AddReviewScreen extends StatelessWidget {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    duration: Duration(seconds: 1),
+                    duration: Duration(seconds: 5),
                     content: Text(
-                      'Tu reseña ha sido añadida.',
+                      'Tu reseña ha sido añadida. Recárga la página para verla.',
                       style: tsSnackBarTitle,
                     ),
                     backgroundColor: kPrimaryColor2,

@@ -119,6 +119,7 @@ class FirebaseServices {
         ranking: worker.child('overall_rating/ranking').value == null ? 0 : int.parse(worker.child('overall_rating/ranking').value.toString()),
         ratingsCount:
             worker.child('overall_rating/ratings_count').value == null ? 0 : int.parse(worker.child('overall_rating/ratings_count').value.toString()),
+        commentsCount: worker.child('comments').children.length,
         avg_rating1: worker.child('rating1/avg_rating').exists ? double.parse(worker.child('rating1/avg_rating').value.toString()) : 0,
         avg_rating2: worker.child('rating2/avg_rating').exists ? double.parse(worker.child('rating2/avg_rating').value.toString()) : 0,
         comments: commentsList,

@@ -13,6 +13,7 @@ class WorkerContainer extends StatelessWidget {
     required this.workerId,
     required this.workerRanking,
     this.workerAllRatingsCount,
+    this.workerAllCommentsCount,
     this.rating1,
     this.rating2,
     this.comments = const [],
@@ -23,6 +24,7 @@ class WorkerContainer extends StatelessWidget {
   final String workerId;
   final String workerRanking;
   final String? workerAllRatingsCount;
+  final String? workerAllCommentsCount;
   final String? rating1;
   final String? rating2;
   final List<CommentModel> comments;
@@ -67,7 +69,7 @@ class WorkerContainer extends StatelessWidget {
                         style: tsWorkerContainerTitle,
                       ),
                       Text('reseñas: ' + (workerAllRatingsCount == null ? '0' : workerAllRatingsCount.toString())),
-                      Text('comentarios: 0'),
+                      Text('comentarios: ' + (workerAllCommentsCount == null ? '0' : workerAllCommentsCount.toString())),
                     ],
                   ),
                 ),

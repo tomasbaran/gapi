@@ -7,6 +7,7 @@ class Worker {
   Object phoneNumber;
   int? ranking;
   int? ratingsCount;
+  int? commentsCount;
   double avg_rating1;
   double? avg_rating2;
   List<CommentModel> comments;
@@ -17,6 +18,7 @@ class Worker {
     required this.name,
     required this.phoneNumber,
     this.ranking,
+    this.commentsCount,
     this.ratingsCount,
     this.avg_rating1 = 0,
     this.avg_rating2 = 0,
