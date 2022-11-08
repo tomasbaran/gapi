@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gapi/model/comment.dart';
 import 'package:gapi/screens/worker_detail_screen.dart';
 import 'package:gapi/theme/style_constants.dart';
+import 'package:gapi/widgets/comment.dart';
 
 class WorkerContainer extends StatelessWidget {
   const WorkerContainer({
@@ -13,6 +15,7 @@ class WorkerContainer extends StatelessWidget {
     this.workerAllRatingsCount,
     this.rating1,
     this.rating2,
+    this.comments = const [],
   }) : super(key: key);
   final String workerName;
   final String categoryName;
@@ -22,6 +25,7 @@ class WorkerContainer extends StatelessWidget {
   final String? workerAllRatingsCount;
   final String? rating1;
   final String? rating2;
+  final List<CommentModel> comments;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,7 @@ class WorkerContainer extends StatelessWidget {
                     workerRanking: workerRanking,
                     rating1: rating1,
                     rating2: rating2,
+                    comments: comments,
                   ))),
       child: Container(
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

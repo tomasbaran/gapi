@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gapi/model/comment.dart';
 import 'package:gapi/model/my_globals.dart';
 import 'package:gapi/screens/services/firebase_services.dart';
 import 'package:gapi/theme/constants.dart';
@@ -49,7 +50,8 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
         final workerAllRatingsCount = worker.ratingsCount;
         final rating1 = worker.avg_rating1;
         final rating2 = worker.avg_rating2;
-        print('worker: ${worker.name} ${worker.ratingsCount}');
+        final comments = worker.comments;
+        print('worker: ${worker.name} ${worker.comments}');
 
         if (workerCategory.toString() == categories[selectedCategoryIndex]) {
           output.add(WorkerContainer(
@@ -61,6 +63,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
             workerAllRatingsCount: workerAllRatingsCount == null ? null : workerAllRatingsCount.toString(),
             rating1: rating1 == null ? null : worker.avg_rating1.toStringAsFixed(1),
             rating2: rating2 == null ? null : worker.avg_rating2!.toStringAsFixed(1),
+            comments: comments,
           ));
           print('rating2: ${rating2}');
           print('rating2: ${output.last.rating2}');

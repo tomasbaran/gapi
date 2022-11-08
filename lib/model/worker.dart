@@ -1,3 +1,5 @@
+import 'package:gapi/model/comment.dart';
+
 class Worker {
   String key;
   Object category;
@@ -7,6 +9,7 @@ class Worker {
   int? ratingsCount;
   double avg_rating1;
   double? avg_rating2;
+  List<CommentModel> comments;
 
   Worker({
     required this.key,
@@ -17,5 +20,6 @@ class Worker {
     this.ratingsCount,
     this.avg_rating1 = 0,
     this.avg_rating2 = 0,
+    this.comments = const [],
   });
 }

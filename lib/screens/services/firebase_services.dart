@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:gapi/model/comment.dart';
 import 'package:gapi/model/worker.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/theme/style_constants.dart';
@@ -38,17 +39,27 @@ class FirebaseServices {
       writeRating(workerId, rating1, '1');
       writeRating(workerId, rating2, '2');
     }
-    if (workerId != null && comment != null) {
-      writeCommentToWorkerOnFirebase(comment, workerId);
+    if (workerId != null && comment != null && rating1 != null && rating2 != null) {
+      double avgRating = (rating1 + rating2) / 2;
+      writeCommentToWorkerOnFirebase(
+        comment,
+        workerId,
+        avgRating,
+      );
     }
   }
 
-  writeCommentToWorkerOnFirebase(String comment, String workerId) {
+  writeCommentToWorkerOnFirebase(String comment, String workerId, double avgRating) {
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyyy-MM-dd-hh-mm').format(now);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
-    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('comment');
-    ref.update({formattedDate: comment});
+    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('comments');
+    ref.update({
+      formattedDate: {
+        'comment': comment,
+        'avg_rating': avgRating,
+      }
+    });
   }
 
   writeReviewToReviewOnFirebase({
@@ -85,6 +96,21 @@ class FirebaseServices {
 
     for (var worker in snapshot.children) {
       print("- snapshot worker: ${worker.child('name').value}: ${worker.child('rating1/avg_rating').value}");
+      List<CommentModel> commentsList = [];
+      if (worker.child('comments').exists) {
+        print('LLength: ${worker.child('comments').children.length}');
+
+        for (var readComment in worker.child('comments').children) {
+          print('comment.value: ${readComment.child('path')}');
+          commentsList.add(
+            CommentModel(
+              body: readComment.child('comment').value.toString(),
+              date: DateTime.parse(readComment.key.toString()),
+              rating: double.parse(readComment.child('avg_rating').value.toString()),
+            ),
+          );
+        }
+      }
       newWorker = Worker(
         key: worker.key ?? 'null',
         category: worker.child('category').value ?? 'null',
@@ -95,6 +121,7 @@ class FirebaseServices {
             worker.child('overall_rating/ratings_count').value == null ? 0 : int.parse(worker.child('overall_rating/ratings_count').value.toString()),
         avg_rating1: worker.child('rating1/avg_rating').exists ? double.parse(worker.child('rating1/avg_rating').value.toString()) : 0,
         avg_rating2: worker.child('rating2/avg_rating').exists ? double.parse(worker.child('rating2/avg_rating').value.toString()) : 0,
+        comments: commentsList,
       );
       unorderedWorkers.add(newWorker);
     }

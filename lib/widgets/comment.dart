@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gapi/theme/style_constants.dart';
+import 'package:intl/intl.dart';
 
 class Comment extends StatelessWidget {
+  final String commentBody;
+  final double rating;
+  final DateTime date;
   const Comment({
     Key? key,
+    required this.commentBody,
+    required this.date,
+    required this.rating,
   }) : super(key: key);
 
   @override
@@ -16,15 +23,15 @@ class Comment extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(12),
             // color: kGreen,
-            color: Colors.black45,
+            color: rating < 2.5 ? kColorRed : kColorGreen,
             child: Text(
-              'Rsitenrsi aistenars airstna irsetnaisetna isetna istnairstnaisretnairstnaist airs rsetniarsent. sret irsnt aisten ars.ta setn airst arstears.t r.st ras.t.ars t. rst tts tst.',
+              commentBody,
               style: tsReviewCategoryComment,
             ),
           ),
         ),
         Text(
-          '24.10.2022: 79%',
+          '${DateFormat('yyyy-MM-dd').format(date)}: $rating  stars',
           style: tsReviewCategoryCommentDate,
         ),
       ],

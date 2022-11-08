@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gapi/model/comment.dart';
 import 'package:gapi/model/my_globals.dart';
 import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/screens/add_review_screen.dart';
@@ -20,6 +21,7 @@ class WorkersDetailScreen extends StatefulWidget {
   final String workerRanking;
   final String? rating1;
   final String? rating2;
+  final List<CommentModel> comments;
   const WorkersDetailScreen({
     Key? key,
     required this.workerName,
@@ -29,6 +31,7 @@ class WorkersDetailScreen extends StatefulWidget {
     required this.workerRanking,
     this.rating1,
     this.rating2,
+    this.comments = const [],
   }) : super(key: key);
 
   @override
@@ -168,9 +171,12 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   rating2: widget.rating2,
                 ),
                 SizedBox(height: 24),
-
-                // comment
-                // Comment(),
+                for (var comment in widget.comments)
+                  Comment(
+                    commentBody: comment.body,
+                    date: comment.date,
+                    rating: comment.rating,
+                  ),
               ]),
             ),
             Center(
