@@ -28,6 +28,7 @@ const TextStyle tsReviewCategoryComment = TextStyle(fontSize: 14, color: Colors.
 const TextStyle tsReviewCategoryCommentDate = TextStyle(fontSize: 10, color: Colors.grey);
 const TextStyle tsReviewAndCommentsCount = TextStyle(fontSize: 14, color: Colors.black);
 const TextStyle tsRankingInfo = TextStyle(fontSize: 12, color: Colors.white70);
+const TextStyle tsCtaWhatsapp = TextStyle(fontSize: 20, color: kColorAlmostBlack);
 
 // Snackbar
 const TextStyle tsSnackBarTitle = TextStyle(fontSize: 16, color: kColorAlmostBlack);

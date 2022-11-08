@@ -97,11 +97,11 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
         width: 70,
         height: 70,
         child: FloatingActionButton(
-          backgroundColor: kPrimaryColor2,
+          backgroundColor: kColorAlmostBlack,
           child: Icon(
             Icons.add,
             size: 40,
-            color: kColorAlmostBlack,
+            color: kPrimaryColor2,
           ),
           onPressed: () => showModalBottomSheet(
             isScrollControlled: true,

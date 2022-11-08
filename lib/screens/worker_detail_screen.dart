@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'dart:async';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WorkersDetailScreen extends StatefulWidget {
   final String categoryName;
@@ -90,11 +92,11 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
         width: 70,
         height: 70,
         child: FloatingActionButton(
-          backgroundColor: kPrimaryColor2,
+          backgroundColor: kColorAlmostBlack,
           child: Icon(
             Icons.star_border,
             size: 40,
-            color: kColorAlmostBlack,
+            color: kPrimaryColor2,
           ),
           onPressed: () => showModalBottomSheet(
             isScrollControlled: true,
@@ -187,7 +189,6 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
                 const SizedBox(height: 16),
                 Text(
                   widget.workerName,
@@ -222,6 +223,53 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                   ),
               ]),
             ),
+            GestureDetector(
+              onTap: () async {
+                final link = WhatsAppUnilink(
+                  phoneNumber: '+52' + widget.phoneNumber,
+                  text: "¡Hola! Encontré referencias de su trabajo en www.tedi.app. ¿Cuándo está disponible, por favor?",
+                );
+                // Convert the WhatsAppUnilink instance to a string.
+                // Use either Dart's string interpolation or the toString() method.
+                // The "launch" method is part of "url_launcher".
+                // await launchUrl(Uri.parse(link.toString()));
+
+                if (!await launchUrl(Uri.parse(link.toString()))) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      duration: Duration(seconds: 5),
+                      content: Text('Whatsapp no disponible. Prueba llamarle copiando el número.'),
+                      backgroundColor: kColorRed,
+                    ),
+                  );
+                }
+
+                // print(launchUrl(Uri.parse(link.toString())).ca);
+              },
+              child: Container(
+                padding: EdgeInsets.all(16),
+                width: 260,
+                decoration: BoxDecoration(
+                  color: kPrimaryColor2,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Icon(
+                      Icons.whatsapp,
+                      size: 24,
+                      color: kColorAlmostBlack,
+                    ),
+                    Text(
+                      'Envía un whatsapp',
+                      style: tsCtaWhatsapp,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -284,6 +332,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 8),
           ],
         ),
       ),

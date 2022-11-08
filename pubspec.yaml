@@ -1,5 +1,5 @@
 name: gapi
-description: A new Flutter project.
+description: Encuentra evaluados servicios del hogar en Mérida.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -40,6 +40,8 @@ dependencies:
   intl_phone_number_input: ^0.7.1
   provider: ^6.0.4
   url_launcher: ^6.1.6
+  whatsapp: ^2.0.0
+  whatsapp_unilink: ^2.0.2
 
 dev_dependencies:
 
