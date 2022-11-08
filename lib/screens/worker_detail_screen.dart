@@ -224,52 +224,55 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
               ]),
             ),
             const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () async {
-                final link = WhatsAppUnilink(
-                  phoneNumber: '+52' + widget.phoneNumber,
-                  text: "¡Hola! Encontré referencias de su trabajo en www.tedi.app. ¿Cuándo está disponible, por favor?",
-                );
-                // Convert the WhatsAppUnilink instance to a string.
-                // Use either Dart's string interpolation or the toString() method.
-                // The "launch" method is part of "url_launcher".
-                // await launchUrl(Uri.parse(link.toString()));
-
-                if (!await launchUrl(Uri.parse(link.toString()))) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      duration: Duration(seconds: 5),
-                      content: Text('Whatsapp no disponible. Prueba llamarle copiando el número.'),
-                      backgroundColor: kColorRed,
-                    ),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () async {
+                  final link = WhatsAppUnilink(
+                    phoneNumber: '+52' + widget.phoneNumber,
+                    text: "¡Hola! Encontré referencias de su trabajo en www.tedi.app. ¿Cuándo está disponible, por favor?",
                   );
-                }
+                  // Convert the WhatsAppUnilink instance to a string.
+                  // Use either Dart's string interpolation or the toString() method.
+                  // The "launch" method is part of "url_launcher".
+                  // await launchUrl(Uri.parse(link.toString()));
 
-                // print(launchUrl(Uri.parse(link.toString())).ca);
-              },
-              child: Container(
-                padding: EdgeInsets.all(10),
-                width: 240,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2.5, color: kPrimaryColor2),
-                  // color: Colors.grey.shade300,
-                  // color: kColorAlmostBlack,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.whatsapp,
-                      size: 30,
-                      color: kPrimaryColor2,
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      'Envía un whatsapp',
-                      style: tsCtaWhatsapp,
-                    ),
-                  ],
+                  if (!await launchUrl(Uri.parse(link.toString()))) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        duration: Duration(seconds: 5),
+                        content: Text('Whatsapp no disponible. Prueba llamarle copiando el número.'),
+                        backgroundColor: kColorRed,
+                      ),
+                    );
+                  }
+
+                  // print(launchUrl(Uri.parse(link.toString())).ca);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  width: 240,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 2.5, color: kPrimaryColor2),
+                    // color: Colors.grey.shade300,
+                    // color: kColorAlmostBlack,
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.whatsapp,
+                        size: 30,
+                        color: kPrimaryColor2,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        'Envía un whatsapp',
+                        style: tsCtaWhatsapp,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -306,32 +309,35 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                     //   // ),
                     // ),
 
-                    GestureDetector(
-                  onTap: () {
-                    Clipboard.setData(ClipboardData(text: widget.phoneNumber)).then((value) {
-                      //only if ->
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: Duration(seconds: 1),
-                          content: Text('Copiado.'),
-                        ),
-                      ); // -> show a notification
-                    });
-                  },
-                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Icon(
-                      Icons.phone,
-                      color: kColorAlmostBlack,
-                    ),
-                    SizedBox(width: 12),
-                    Text(
-                      parsedPhoneNumber,
-                      // widget.phoneNumber,
-                      style: TextStyle(fontSize: 20, color: kColorAlmostBlack),
-                    ),
-                    SizedBox(width: 12),
-                    Icon(Icons.copy, color: kColorAlmostBlack),
-                  ]),
+                    MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: widget.phoneNumber)).then((value) {
+                        //only if ->
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: Duration(seconds: 1),
+                            content: Text('Copiado.'),
+                          ),
+                        ); // -> show a notification
+                      });
+                    },
+                    child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Icon(
+                        Icons.phone,
+                        color: kColorAlmostBlack,
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        parsedPhoneNumber,
+                        // widget.phoneNumber,
+                        style: TextStyle(fontSize: 20, color: kColorAlmostBlack),
+                      ),
+                      SizedBox(width: 12),
+                      Icon(Icons.copy, color: kColorAlmostBlack),
+                    ]),
+                  ),
                 ),
               ),
             ),
