@@ -25,17 +25,21 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
   int selectedCategoryIndex = 0;
   bool countedWorkers = false;
   int workersCounter = 0;
+  int reviewsCounter = 0;
 
   Future<List<Widget>> readWorkersFromDatabase() async {
     List<WorkerContainer> output = [];
 
     FirebaseDatabase database = FirebaseDatabase.instance;
 
-    final ref = database.ref().child('workers');
-    final snapshot = await ref.get();
+    final workersRef = database.ref().child('workers');
+    final workersSnapshot = await workersRef.get();
 
-    if (snapshot.exists) {
-      List<Worker> orderedWorkers = FirebaseServices().sortByRanking(snapshot);
+    final reviewsRef = database.ref().child('reviews');
+    final reviewsSnapshot = await reviewsRef.get();
+
+    if (workersSnapshot.exists) {
+      List<Worker> orderedWorkers = FirebaseServices().sortByRanking(workersSnapshot);
 
       for (var worker in orderedWorkers) {
         final workerName = worker.name;
@@ -65,7 +69,8 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
 
       if (!countedWorkers) {
         setState(() {
-          workersCounter = snapshot.children.length;
+          workersCounter = workersSnapshot.children.length;
+          reviewsCounter = reviewsSnapshot.children.length;
           countedWorkers = true;
         });
       }
@@ -125,7 +130,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                     size: 14,
                   ),
                   Text(
-                    'Mérida: $workersCounter proveedores',
+                    'Mérida: $workersCounter proveedores, $reviewsCounter reseñas',
                     style: TextStyle(
                       color: kColorGrey,
                       fontSize: 14,
