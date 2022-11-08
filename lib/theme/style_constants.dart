@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 const Color kPrimaryColor2 = Color.fromARGB(255, 108, 224, 145);
 const Color kPrimaryColor1 = Color(0xFF418D72);
 Color kPrimaryColorLight = Color(0xFF418D72).withOpacity(0.04);
-const Color kColorRed = Color.fromARGB(255, 255, 65, 65);
-const Color kColorGreen = Color.fromARGB(255, 0, 176, 68);
+const Color kColorRed = Color.fromARGB(255, 226, 12, 12);
+const Color kColorGreenLight = Color.fromARGB(255, 0, 176, 68);
+const Color kColorGreen = Color(0xFF418D72);
 const Color kColorLightGrey = Color(0xFFF0F0F0);
 const Color kColorGrey = Color(0xFFCDCDCF);
 const Color kColorDarkGrey = Color(0xFF57575A);
@@ -25,6 +26,8 @@ const TextStyle tsReviewValue = TextStyle(fontSize: 22, fontWeight: FontWeight.b
 const double kSizeBtwRankings = 12;
 const TextStyle tsReviewCategoryComment = TextStyle(fontSize: 14, color: Colors.white);
 const TextStyle tsReviewCategoryCommentDate = TextStyle(fontSize: 10, color: Colors.grey);
+const TextStyle tsReviewAndCommentsCount = TextStyle(fontSize: 14, color: Colors.black);
+const TextStyle tsRankingInfo = TextStyle(fontSize: 12, color: Colors.white70);
 
 // Snackbar
 const TextStyle tsSnackBarTitle = TextStyle(fontSize: 16, color: kColorAlmostBlack);

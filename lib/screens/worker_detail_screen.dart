@@ -19,6 +19,8 @@ class WorkersDetailScreen extends StatefulWidget {
   final String workerName;
   final String workerId;
   final String workerRanking;
+  final String? workerRatingsCount;
+  final String? workerCommentsCount;
   final String? rating1;
   final String? rating2;
   final List<CommentModel> comments;
@@ -31,6 +33,8 @@ class WorkersDetailScreen extends StatefulWidget {
     required this.workerRanking,
     this.rating1,
     this.rating2,
+    this.workerCommentsCount,
+    this.workerRatingsCount,
     this.comments = const [],
   }) : super(key: key);
 
@@ -113,39 +117,78 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
           children: [
             Expanded(
               child: ListView(children: [
+                const SizedBox(height: 12),
                 UnconstrainedBox(
                   child: LimitedBox(
-                    maxHeight: 200,
-                    maxWidth: 200,
+                    maxHeight: 140,
+                    maxWidth: 140,
                     child: Container(
-                      margin: EdgeInsets.all(32),
                       decoration: BoxDecoration(
                         color: widget.workerRanking == '0'
                             ? Colors.white70
                             : widget.workerRanking.characters.first == '-'
                                 ? kColorRed
-                                : kPrimaryColor2,
+                                : kColorGreen,
                         borderRadius: BorderRadius.all(
                           Radius.circular(20),
                         ),
                       ),
-                      child: Center(
-                        child: Text(
-                          widget.workerRanking == '0' ? '?' : widget.workerRanking + ' %',
-                          style: TextStyle(
-                            color: widget.workerRanking == '0'
-                                ? Colors.black38
-                                : widget.workerRanking.characters.first == '-'
-                                    ? Colors.white
-                                    : kColorAlmostBlack,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 32,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 8),
+                          Text(
+                            'tedi.app ranking',
+                            style: tsRankingInfo,
                           ),
-                        ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: Center(
+                                child: Text(
+                                  widget.workerRanking == '0' ? '?' : widget.workerRanking + ' %',
+                                  style: TextStyle(
+                                    color: widget.workerRanking == '0'
+                                        ? Colors.black38
+                                        : widget.workerRanking.characters.first == '-'
+                                            ? Colors.white
+                                            : Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 32,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  style: tsRankingInfo,
+                                  children: [
+                                    TextSpan(text: 'Reseñas: ', style: tsRankingInfo.copyWith(fontWeight: FontWeight.normal)),
+                                    TextSpan(text: widget.workerRatingsCount ?? '0'),
+                                  ],
+                                ),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  style: tsRankingInfo,
+                                  children: [
+                                    TextSpan(text: 'Comentarios: ', style: tsRankingInfo.copyWith(fontWeight: FontWeight.normal)),
+                                    TextSpan(text: widget.workerCommentsCount ?? '0'),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
+                const SizedBox(height: 12),
+                const SizedBox(height: 16),
                 Text(
                   widget.workerName,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kColorAlmostBlack),

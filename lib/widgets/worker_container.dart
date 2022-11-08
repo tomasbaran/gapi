@@ -41,6 +41,8 @@ class WorkerContainer extends StatelessWidget {
                     phoneNumber: phoneNumber,
                     workerId: workerId,
                     workerRanking: workerRanking,
+                    workerRatingsCount: workerAllRatingsCount,
+                    workerCommentsCount: workerAllCommentsCount,
                     rating1: rating1,
                     rating2: rating2,
                     comments: comments,
@@ -83,7 +85,7 @@ class WorkerContainer extends StatelessWidget {
                         ? Colors.white70
                         : workerRanking.characters.first == '-'
                             ? kColorRed
-                            : kPrimaryColor2,
+                            : kColorGreen,
                     borderRadius: BorderRadius.all(Radius.circular(8)),
                   ),
                   child: Text(
@@ -93,7 +95,7 @@ class WorkerContainer extends StatelessWidget {
                           ? Colors.black38
                           : workerRanking.characters.first == '-'
                               ? Colors.white
-                              : kColorAlmostBlack,
+                              : Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

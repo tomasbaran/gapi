@@ -45,7 +45,7 @@ class ReviewContainer extends StatelessWidget {
                     itemSize: 28,
                     itemBuilder: (context, _) => Icon(
                       Icons.star,
-                      color: Colors.black87,
+                      color: double.parse(rating1.toString()) > 2.5 ? kColorGreen : kColorRed,
                     ),
                   ),
                   SizedBox(height: kSizeBtwRankings),
@@ -54,7 +54,7 @@ class ReviewContainer extends StatelessWidget {
                     itemSize: 28,
                     itemBuilder: (context, _) => Icon(
                       Icons.star,
-                      color: Colors.black87,
+                      color: double.parse(rating2.toString()) > 2.5 ? kColorGreen : kColorRed,
                     ),
                   ),
                 ],
