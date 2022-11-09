@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gapi/notifiers/review.dart';
+import 'package:gapi/screens/services/auth_services.dart';
 import 'package:gapi/screens/workers_list_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gapi/theme/style_constants.dart';
@@ -13,6 +15,14 @@ void main() async {
     // options: FirebaseOptions(apiKey: apiKey, appId: appId, messagingSenderId: messagingSenderId, projectId: projectId)
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
 
   runApp(const MyApp());
 }

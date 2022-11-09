@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gapi/model/comment.dart';
 import 'package:gapi/model/my_globals.dart';
 import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/screens/add_review_screen.dart';
+import 'package:gapi/screens/login_screen.dart';
+import 'package:gapi/screens/services/auth_services.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:gapi/widgets/comment.dart';
@@ -98,17 +101,30 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
             size: 40,
             color: kPrimaryColor2,
           ),
-          onPressed: () => showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) => AddReviewScreen(
-              workerId: widget.workerId,
-              workerName: widget.workerName,
-            ),
-          ).whenComplete(() {
-            Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview1(0);
-            Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview2(0);
-          }),
+          onPressed: () async {
+            if (FirebaseAuth.instance.currentUser == null) {
+              print('starting...');
+              String input = await AuthServices().loginWithPhone();
+
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                builder: (BuildContext context) => LoginScreen(input: input),
+              );
+            } else {
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                builder: (BuildContext context) => AddReviewScreen(
+                  workerId: widget.workerId,
+                  workerName: widget.workerName,
+                ),
+              ).whenComplete(() {
+                Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview1(0);
+                Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview2(0);
+              });
+            }
+          },
         ),
       ),
       appBar: AppBar(title: Text(widget.categoryName)),
@@ -139,7 +155,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            'tedi.app ranking',
+                            'Tedi ranking:',
                             style: tsRankingInfo,
                           ),
                           Expanded(
@@ -167,7 +183,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                                 text: TextSpan(
                                   style: tsRankingInfo,
                                   children: [
-                                    TextSpan(text: 'Reseñas: ', style: tsRankingInfo.copyWith(fontWeight: FontWeight.normal)),
+                                    TextSpan(text: 'reseñas: ', style: tsRankingInfo.copyWith(fontWeight: FontWeight.normal)),
                                     TextSpan(text: widget.workerRatingsCount ?? '0'),
                                   ],
                                 ),
@@ -176,7 +192,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                                 text: TextSpan(
                                   style: tsRankingInfo,
                                   children: [
-                                    TextSpan(text: 'Comentarios: ', style: tsRankingInfo.copyWith(fontWeight: FontWeight.normal)),
+                                    TextSpan(text: 'comentarios: ', style: tsRankingInfo.copyWith(fontWeight: FontWeight.normal)),
                                     TextSpan(text: widget.workerCommentsCount ?? '0'),
                                   ],
                                 ),
