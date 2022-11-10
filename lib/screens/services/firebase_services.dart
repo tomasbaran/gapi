@@ -71,31 +71,45 @@ class FirebaseServices {
     });
   }
 
+  writeReviewToUserOnFirebase({required reviewId}) async {
+    DatabaseReference newReviewRef = usersRef.child(auth.currentUser!.uid).child('reviews');
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd-hh-mm').format(now);
+    print('cp10');
+    try {
+      await newReviewRef.set({formattedDate: reviewId});
+    } catch (e) {
+      print('error #99: $e');
+    }
+  }
+
   writeReviewToReviewOnFirebase({
     required String workerId,
     required double rating1,
     required double rating2,
     String? comment,
   }) async {
-    DatabaseReference newReviewsRef = reviewsRef.push();
+    DatabaseReference newReviewRef = reviewsRef.push();
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     if (comment == null)
-      await newReviewsRef.set({
+      await newReviewRef.set({
         'rating1': rating1,
         'rating2': rating2,
         'worker_id': workerId,
         'date': formattedDate,
       });
     else
-      await newReviewsRef.set({
+      await newReviewRef.set({
         'rating1': rating1,
         'rating2': rating2,
         'worker_id': workerId,
         'comment': comment,
         'date': formattedDate,
       });
+
+    await writeReviewToUserOnFirebase(reviewId: newReviewRef.key);
   }
 
   List<Worker> sortByRanking(DataSnapshot snapshot) {

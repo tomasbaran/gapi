@@ -165,7 +165,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> with 
                   backgroundColor: kColorRed,
                 ),
               );
-              return print('Something went wrong!');
+              return print('Something went wrong! ${authException.code}');
           }
         },
         onError: (error, stackTrace) {
