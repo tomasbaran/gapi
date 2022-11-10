@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/pin_input_field_widget.dart';
 
 class VerifyPhoneNumberScreen extends StatefulWidget {
@@ -86,7 +88,18 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> with 
             // msg: 'Login Success UID: ${userCredential.user?.uid}',
           );
           Navigator.of(context).pop();
+          Navigator.of(context).pop();
 
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 5),
+              content: Text(
+                '¡Felicidades!\n\nYa puedes añadir reseñas.',
+                style: tsSnackBarTitle,
+              ),
+              backgroundColor: kColorGreen,
+            ),
+          );
           // Navigator.pushNamedAndRemoveUntil(
           //   context,
           //   HomeScreen.id,
@@ -105,16 +118,54 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> with 
             case 'invalid-phone-number':
               // invalid phone number
               // return showSnackBar('Invalid phone number!');
-              return print('Invalid phone number!');
+              print('Invalid phone number!');
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 5),
+                  content: Text(
+                    'Error!\n\nNúmero de teléfono inválido.',
+                    style: tsSnackBarTitle,
+                  ),
+                  backgroundColor: kColorRed,
+                ),
+              );
+              return;
             case 'invalid-verification-code':
               // invalid otp entered
               // return showSnackBar('The entered OTP is invalid!');
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 5),
+                  content: Text(
+                    'Error!\n\Código de verificación inválido.',
+                    style: tsSnackBarTitle,
+                  ),
+                  backgroundColor: kColorRed,
+                ),
+              );
               return print('The entered OTP is invalid!');
             // handle other error codes
             default:
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 5),
+                  content: Text(
+                    'Error!\n\nAlgo fue mal.',
+                    style: tsSnackBarTitle,
+                  ),
+                  backgroundColor: kColorRed,
+                ),
+              );
               return print('Something went wrong!');
-            // showSnackBar('Something went wrong!');
-            // handle error further if needed
           }
         },
         onError: (error, stackTrace) {
@@ -124,15 +175,25 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> with 
             stackTrace: stackTrace,
           );
 
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 5),
+              content: Text(
+                'Error #1!\n\nAlgo fue mal.',
+                style: tsSnackBarTitle,
+              ),
+              backgroundColor: kColorRed,
+            ),
+          );
+
           return print('Ann error occurred!');
-          // showSnackBar('An error occurred!');
         },
         builder: (context, controller) {
           return Scaffold(
             appBar: AppBar(
               leadingWidth: 0,
               leading: const SizedBox.shrink(),
-              title: const Text('Verify Phone Number'),
+              title: const Text('Verificacar Número de Teléfono'),
               actions: [
                 if (controller.codeSent)
                   TextButton(
@@ -155,7 +216,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> with 
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: const [
-                      // CustomLoader(),
+                      CircularProgressIndicator(),
                       SizedBox(height: 50),
                       Center(
                         child: Text(
@@ -170,33 +231,14 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> with 
                     controller: scrollController,
                     children: [
                       Text(
-                        "We've sent an SMS with a verification code to ${widget.phoneNumber}",
-                        style: const TextStyle(fontSize: 25),
+                        "Hemos enviado un mensaje con el código de verificación a ${widget.phoneNumber}.",
+                        style: const TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 10),
                       const Divider(),
-                      if (controller.isListeningForOtpAutoRetrieve)
-                        Column(
-                          children: const [
-                            // CustomLoader(),
-                            SizedBox(height: 50),
-                            Text(
-                              'Listening for OTP',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 15),
-                            Divider(),
-                            Text('OR', textAlign: TextAlign.center),
-                            Divider(),
-                          ],
-                        ),
                       const SizedBox(height: 15),
                       const Text(
-                        'Enter OTP',
+                        'Ingresa el código',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,

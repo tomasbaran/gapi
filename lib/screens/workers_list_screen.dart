@@ -127,13 +127,13 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                   Text(widget.title, style: tsMainAppBarTitle),
                   const Expanded(child: Text(': servicios del hogar', style: tsMainAppBarSubtitle)),
                   (FirebaseAuth.instance.currentUser == null)
-                      ? Icon(Icons.account_circle_rounded)
+                      ? Container()
                       : MouseRegion(
                           cursor: SystemMouseCursors.click,
                           child: GestureDetector(
                             child:
                                 // Icon(Icons.account_circle_sharp),
-                                Icon(Icons.logout),
+                                Icon(Icons.verified),
                             onTap: (() => AuthServices().logout()),
                           ),
                         ),
@@ -235,7 +235,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                   ),
                 );
               } else
-                return const Text('...');
+                return const Text('cargando proveedores...');
             },
           ),
         ),

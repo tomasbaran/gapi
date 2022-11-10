@@ -31,4 +31,7 @@ const TextStyle tsRankingInfo = TextStyle(fontSize: 12, color: Colors.white70);
 const TextStyle tsCtaWhatsapp = TextStyle(fontSize: 20, color: kPrimaryColor2, fontWeight: FontWeight.w500);
 
 // Snackbar
-const TextStyle tsSnackBarTitle = TextStyle(fontSize: 16, color: kColorAlmostBlack);
+const TextStyle tsSnackBarTitle = TextStyle(fontSize: 16, color: Colors.white);
+
+// Verification screen
+const TextStyle tsVerificationText = TextStyle(fontSize: 20, color: kColorAlmostBlack);
