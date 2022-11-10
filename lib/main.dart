@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/screens/services/auth_services.dart';
@@ -33,17 +34,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tedi',
-      theme: ThemeData(
-        primaryColor: kColorDarkGrey,
-        appBarTheme: AppBarTheme(
-          color: kColorDarkGrey,
+    return FirebasePhoneAuthProvider(
+      child: MaterialApp(
+        title: 'Tedi',
+        theme: ThemeData(
+          primaryColor: kColorDarkGrey,
+          appBarTheme: AppBarTheme(
+            color: kColorDarkGrey,
+          ),
         ),
-      ),
-      home: ChangeNotifierProvider(
-        create: (_) => Review(),
-        child: WorkersListScreen(title: 'Tedi.app'),
+        home: ChangeNotifierProvider(
+          create: (_) => Review(),
+          child: WorkersListScreen(title: 'Tedi.app'),
+        ),
       ),
     );
   }

@@ -103,13 +103,10 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
           ),
           onPressed: () async {
             if (FirebaseAuth.instance.currentUser == null) {
-              print('starting...');
-              String input = await AuthServices().loginWithPhone();
-
               showModalBottomSheet(
                 isScrollControlled: true,
                 context: context,
-                builder: (BuildContext context) => LoginScreen(input: input),
+                builder: (BuildContext context) => LoginScreen(),
               );
             } else {
               showModalBottomSheet(
