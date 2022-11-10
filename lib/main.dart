@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:gapi/notifiers/review.dart';
-import 'package:gapi/screens/services/auth_services.dart';
 import 'package:gapi/screens/workers_list_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gapi/theme/style_constants.dart';

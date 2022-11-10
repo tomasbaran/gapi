@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:gapi/model/comment.dart';
@@ -11,16 +12,24 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:intl/intl.dart';
 
 class FirebaseServices {
+  DatabaseReference workersRef = FirebaseDatabase.instance.ref("workers");
+  DatabaseReference reviewsRef = FirebaseDatabase.instance.ref("reviews");
+  DatabaseReference usersRef = FirebaseDatabase.instance.ref("users");
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future logout() async {
+    await auth.signOut();
+  }
+
   writeWorkerToWorkerOnFirebase(
     String? workerName,
     String workerPhone,
     String? categoryName,
     String workerLocation,
   ) async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref("workers");
-    DatabaseReference newRef = ref.push();
-
-    await newRef.set({
+    DatabaseReference newWorkerRef = workersRef.push();
+    await newWorkerRef.set({
       'name': workerName,
       'phone': workerPhone,
       'category': categoryName,
@@ -53,8 +62,8 @@ class FirebaseServices {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
-    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('comments');
-    ref.update({
+    DatabaseReference commentsRef = FirebaseDatabase.instance.ref("workers").child(workerId).child('comments');
+    commentsRef.update({
       formattedDate: {
         'comment': comment,
         'avg_rating': avgRating,
@@ -68,20 +77,19 @@ class FirebaseServices {
     required double rating2,
     String? comment,
   }) async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref("reviews");
-    DatabaseReference newRef = ref.push();
+    DatabaseReference newReviewsRef = reviewsRef.push();
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     if (comment == null)
-      await newRef.set({
+      await newReviewsRef.set({
         'rating1': rating1,
         'rating2': rating2,
         'worker_id': workerId,
         'date': formattedDate,
       });
     else
-      await newRef.set({
+      await newReviewsRef.set({
         'rating1': rating1,
         'rating2': rating2,
         'worker_id': workerId,
@@ -182,13 +190,13 @@ class FirebaseServices {
     double rating1,
     double rating2,
   ) async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('overall_rating');
+    DatabaseReference overallRatingRef = FirebaseDatabase.instance.ref("workers").child(workerId).child('overall_rating');
 
     double newRatingsSum = rating1 + rating2;
 
-    final ratingSumSnapshot = await ref.child('ratings_sum').get();
+    final ratingSumSnapshot = await overallRatingRef.child('ratings_sum').get();
     if (ratingSumSnapshot.exists) {
-      final dynamic snapshot = await ref.once();
+      final dynamic snapshot = await overallRatingRef.once();
 
       int readRatingsSum = snapshot.snapshot.value['ratings_sum'];
       int readRatingsCount = snapshot.snapshot.value['ratings_count'];
@@ -199,16 +207,16 @@ class FirebaseServices {
 
       int newRanking = calcRanking(updatedRatingsSum, ++readRatingsCount);
 
-      await ref.update({'ratings_sum': updatedRatingsSum});
-      await ref.update({'ratings_count': readRatingsCount++});
-      await ref.update({'ranking': newRanking});
+      await overallRatingRef.update({'ratings_sum': updatedRatingsSum});
+      await overallRatingRef.update({'ratings_count': readRatingsCount++});
+      await overallRatingRef.update({'ranking': newRanking});
     } else {
       double updatedRatingsSum = calcRating(0, newRatingsSum);
       int ranking = calcRanking(newRatingsSum, 1);
 
-      await ref.update({'ratings_sum': updatedRatingsSum});
-      await ref.update({'ratings_count': 1});
-      await ref.update({'ranking': ranking});
+      await overallRatingRef.update({'ratings_sum': updatedRatingsSum});
+      await overallRatingRef.update({'ratings_count': 1});
+      await overallRatingRef.update({'ranking': ranking});
     }
   }
 
@@ -217,12 +225,12 @@ class FirebaseServices {
     double rating,
     String ratingId,
   ) async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref("workers").child(workerId).child('rating' + ratingId);
+    DatabaseReference ratingRef = FirebaseDatabase.instance.ref("workers").child(workerId).child('rating' + ratingId);
 
-    final ratingSumSnapshot = await ref.get();
+    final ratingSumSnapshot = await ratingRef.get();
 
     if (ratingSumSnapshot.exists) {
-      final dynamic snapshot = await ref.once();
+      final dynamic snapshot = await ratingRef.once();
 
       int readRatingsSum = snapshot.snapshot.value['ratings_sum'];
       int readRatingsCount = snapshot.snapshot.value['ratings_count'];
@@ -233,13 +241,13 @@ class FirebaseServices {
 
       double newAvgRating = (newRatingsSum / ++readRatingsCount);
 
-      await ref.update({'ratings_sum': newRatingsSum});
-      await ref.update({'ratings_count': readRatingsCount++});
-      await ref.update({'avg_rating': newAvgRating});
+      await ratingRef.update({'ratings_sum': newRatingsSum});
+      await ratingRef.update({'ratings_count': readRatingsCount++});
+      await ratingRef.update({'avg_rating': newAvgRating});
     } else {
-      await ref.update({'ratings_sum': rating});
-      await ref.update({'ratings_count': 1});
-      await ref.update({'avg_rating': rating});
+      await ratingRef.update({'ratings_sum': rating});
+      await ratingRef.update({'ratings_count': 1});
+      await ratingRef.update({'avg_rating': rating});
     }
   }
 }

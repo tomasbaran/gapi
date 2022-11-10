@@ -6,7 +6,6 @@ import 'package:gapi/model/my_globals.dart';
 import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/screens/add_review_screen.dart';
 import 'package:gapi/screens/login_screen.dart';
-import 'package:gapi/screens/services/auth_services.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:gapi/widgets/comment.dart';

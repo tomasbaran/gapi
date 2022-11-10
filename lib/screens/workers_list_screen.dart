@@ -6,7 +6,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gapi/model/comment.dart';
 import 'package:gapi/model/my_globals.dart';
-import 'package:gapi/screens/services/auth_services.dart';
 import 'package:gapi/screens/services/firebase_services.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/screens/add_worker_screen.dart';
@@ -134,7 +133,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                             child:
                                 // Icon(Icons.account_circle_sharp),
                                 Icon(Icons.verified),
-                            onTap: (() => AuthServices().logout()),
+                            onTap: (() => FirebaseServices().logout()),
                           ),
                         ),
                 ],
