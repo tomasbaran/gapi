@@ -102,7 +102,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                 ),
                 BottomButton(
                     title: 'Confirmar reseña',
-                    onTap: () {
+                    onTap: () async {
                       print('workerId: ${widget.workerId}');
                       print('review1: ${Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1}');
                       print('review2: ${Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2}');
@@ -118,25 +118,28 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                         );
                       } else {
                         if (comment == null) {
-                          FirebaseServices().writeReviewToReviewsOnFirebase(
+                          await FirebaseServices().writeReviewToWorkerOnFirebase(
                             workerId: widget.workerId,
                             rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1,
                             rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2,
                           );
-                          FirebaseServices().writeReviewToWorkerOnFirebase(
+
+                          FirebaseServices().writeReviewToReviewsOnFirebase(
                             workerId: widget.workerId,
                             rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1,
                             rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2,
                           );
                         } else {
                           print('commentarios: $comment');
-                          FirebaseServices().writeReviewToReviewsOnFirebase(
+
+                          await FirebaseServices().writeReviewToWorkerOnFirebase(
                             workerId: widget.workerId,
                             rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1,
                             rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2,
                             comment: comment,
                           );
-                          FirebaseServices().writeReviewToWorkerOnFirebase(
+
+                          FirebaseServices().writeReviewToReviewsOnFirebase(
                             workerId: widget.workerId,
                             rating1: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating1,
                             rating2: Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).tmpRating2,

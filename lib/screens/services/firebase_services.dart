@@ -40,25 +40,53 @@ class FirebaseServices {
     });
   }
 
-  writeReviewToWorkerOnFirebase({
+  Future writeReviewToWorkerOnFirebase({
     String? workerId,
     double? rating1,
     double? rating2,
     String? comment,
-  }) {
+  }) async {
+    DatabaseReference reviewIdRef = await checkIfAmmendedReviewAndGetReviewRef(workerId!);
+    print('ammended reviewIdString: ${reviewIdRef}; ammendedReview: $ammendedReview');
+
+    if (ammendedReview != null) {
+      print('ammendedReview:');
+      if (ammendedReview!) {
+        ReviewModel oldReview = await readReviewByUserOnFirebase(workerId: workerId);
+        double oldRating1 = rating1!;
+        rating1 = rating1! - oldReview.rating1!.toDouble();
+        // print('updatedRating1: $updatedRating1 = rating1:$rating1 - oldReview.rating1: ${oldReview.rating1}');
+        print('updatedRating1: $rating1');
+        rating2 = rating2! - oldReview.rating2!.toDouble();
+        print('updatedRating2: $rating2');
+        // print('updatedRating1: $updatedRating2 = rating2:$rating2 - oldReview.rating2: ${oldReview.rating2}');
+      }
+    }
+
     if (workerId != null && rating1 != null && rating2 != null) {
-      writeOverallRatings(workerId, rating1, rating2);
+      await writeOverallRatings(workerId, rating1, rating2);
       writeRating(workerId, rating1, '1');
       writeRating(workerId, rating2, '2');
+      if (comment != null) {
+        double avgRating = (rating1 + rating2) / 2;
+        writeCommentToWorkerOnFirebase(
+          comment,
+          workerId,
+          avgRating,
+        );
+      }
     }
-    if (workerId != null && comment != null && rating1 != null && rating2 != null) {
-      double avgRating = (rating1 + rating2) / 2;
-      writeCommentToWorkerOnFirebase(
-        comment,
-        workerId,
-        avgRating,
-      );
-    }
+    // else {
+
+    // else if (workerId != null && comment != null && rating1 != null && rating2 != null) {
+    //   double avgRating = (rating1 + rating2) / 2;
+    //   writeCommentToWorkerOnFirebase(
+    //     comment,
+    //     workerId,
+    //     avgRating,
+    //   );
+    // }
+    // }
   }
 
   writeCommentToWorkerOnFirebase(String comment, String workerId, double avgRating) {
@@ -123,24 +151,30 @@ class FirebaseServices {
     }
   }
 
-  writeReviewToReviewsOnFirebase({
-    required String workerId,
-    required double rating1,
-    required double rating2,
-    String? comment,
-  }) async {
+  bool? ammendedReview;
+
+  Future<DatabaseReference> checkIfAmmendedReviewAndGetReviewRef(String workerId) async {
     String uid = auth.currentUser!.uid;
     DataSnapshot reviewIdSnapshot = await usersRef.child(uid).child('reviews').child(workerId).get();
     String reviewId = reviewIdSnapshot.value.toString();
     print('ammendedReview: $reviewId');
     DatabaseReference newReviewRef;
     if (reviewId == 'null') {
-      newReviewRef = reviewsRef.push();
+      ammendedReview = false;
+      return reviewsRef.push().ref;
+    } else {
+      ammendedReview = true;
+      return reviewsRef.child(reviewId).ref;
     }
-    // if ammendedReview, don't push a new review but edit the previous one
-    else {
-      newReviewRef = reviewsRef.child(reviewId);
-    }
+  }
+
+  writeReviewToReviewsOnFirebase({
+    required String workerId,
+    required double rating1,
+    required double rating2,
+    String? comment,
+  }) async {
+    DatabaseReference newReviewRef = await checkIfAmmendedReviewAndGetReviewRef(workerId);
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
@@ -223,7 +257,7 @@ class FirebaseServices {
   double calcRating(double readRating, double newRating) {
     double output;
     // penalty for an extremely bad rating of value 1
-    if (newRating < 4) {
+    if (newRating < 4 && !ammendedReview!) {
       output = readRating + newRating - 3;
     } else {
       output = readRating + newRating;
@@ -262,6 +296,7 @@ class FirebaseServices {
     double newRatingsSum = rating1 + rating2;
 
     final ratingSumSnapshot = await overallRatingRef.child('ratings_sum').get();
+
     if (ratingSumSnapshot.exists) {
       final dynamic snapshot = await overallRatingRef.once();
 
@@ -272,10 +307,10 @@ class FirebaseServices {
 
       double updatedRatingsSum = calcRating(readRatingsSum.toDouble(), newRatingsSum);
 
-      int newRanking = calcRanking(updatedRatingsSum, ++readRatingsCount);
+      int newRanking = calcRanking(updatedRatingsSum, ammendedReview! ? readRatingsCount : ++readRatingsCount);
 
       await overallRatingRef.update({'ratings_sum': updatedRatingsSum});
-      await overallRatingRef.update({'ratings_count': readRatingsCount++});
+      await overallRatingRef.update({'ratings_count': ammendedReview! ? readRatingsCount : readRatingsCount++});
       await overallRatingRef.update({'ranking': newRanking});
     } else {
       double updatedRatingsSum = calcRating(0, newRatingsSum);
@@ -306,10 +341,10 @@ class FirebaseServices {
 
       int newRatingsSum = readRatingsSum + rating.toInt();
 
-      double newAvgRating = (newRatingsSum / ++readRatingsCount);
+      double newAvgRating = (newRatingsSum / (ammendedReview! ? readRatingsCount : ++readRatingsCount));
 
       await ratingRef.update({'ratings_sum': newRatingsSum});
-      await ratingRef.update({'ratings_count': readRatingsCount++});
+      await ratingRef.update({'ratings_count': ammendedReview! ? readRatingsCount : readRatingsCount++});
       await ratingRef.update({'avg_rating': newAvgRating});
     } else {
       await ratingRef.update({'ratings_sum': rating});
