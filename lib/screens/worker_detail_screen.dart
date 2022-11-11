@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gapi/model/comment.dart';
+import 'package:gapi/model/review.dart';
 import 'package:gapi/model/my_globals.dart';
 import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/screens/add_review_screen.dart';
 import 'package:gapi/screens/login_screen.dart';
+import 'package:gapi/screens/services/firebase_services.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
 import 'package:gapi/widgets/comment.dart';
@@ -27,7 +28,7 @@ class WorkersDetailScreen extends StatefulWidget {
   final String? workerCommentsCount;
   final String? rating1;
   final String? rating2;
-  final List<CommentModel> comments;
+  final List<ReviewModel> comments;
   const WorkersDetailScreen({
     Key? key,
     required this.workerName,
@@ -83,7 +84,7 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
       String int_number_string = '+52' + phoneNumber;
       final Uri launchUri = Uri(
         scheme: 'tel',
-        path: '9991759427',
+        path: '9991234567',
       );
       print('calling...');
       await UrlLauncher.launchUrl(launchUri);
@@ -229,9 +230,9 @@ class _WorkersDetailScreenState extends State<WorkersDetailScreen> {
                 SizedBox(height: 16),
                 for (var comment in widget.comments)
                   Comment(
-                    commentBody: comment.body,
-                    date: comment.date,
-                    rating: comment.rating,
+                    commentText: comment.commentText,
+                    date: comment.date!,
+                    rating: comment.avgRating!,
                   ),
               ]),
             ),

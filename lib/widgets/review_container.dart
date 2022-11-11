@@ -62,6 +62,7 @@ class ReviewContainer extends StatelessWidget {
             : Column(
                 children: [
                   RatingBar.builder(
+                    initialRating: double.parse(rating1 ?? '0'),
                     itemSize: 28,
                     itemBuilder: (context, _) => MouseRegion(
                       cursor: SystemMouseCursors.click,
@@ -72,11 +73,12 @@ class ReviewContainer extends StatelessWidget {
                     ),
                     onRatingUpdate: (rating) {
                       Provider.of<Review>(myGlobals.scaffoldKey.currentContext!, listen: false).changeReview1(rating);
-                      print(rating);
+                      print('ululu: $rating');
                     },
                   ),
                   SizedBox(height: kSizeBtwRankings),
                   RatingBar.builder(
+                    initialRating: double.parse(rating2 ?? '0'),
                     itemSize: 28,
                     itemBuilder: (context, _) => MouseRegion(
                       cursor: SystemMouseCursors.click,

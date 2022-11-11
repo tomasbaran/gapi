@@ -5,12 +5,12 @@ import 'package:gapi/widgets/review_container.dart';
 import 'package:intl/intl.dart';
 
 class Comment extends StatelessWidget {
-  final String commentBody;
+  final String? commentText;
   final double rating;
   final DateTime date;
   const Comment({
     Key? key,
-    required this.commentBody,
+    this.commentText,
     required this.date,
     required this.rating,
   }) : super(key: key);
@@ -30,7 +30,7 @@ class Comment extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  commentBody,
+                  commentText ?? 'ningun comentario',
                   style: tsReviewCategoryComment,
                 ),
                 const SizedBox(

@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gapi/model/comment.dart';
+import 'package:gapi/model/review.dart';
 import 'package:gapi/model/my_globals.dart';
 import 'package:gapi/screens/services/firebase_services.dart';
 import 'package:gapi/theme/constants.dart';

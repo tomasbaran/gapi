@@ -1,4 +1,4 @@
-import 'package:gapi/model/comment.dart';
+import 'package:gapi/model/review.dart';
 
 class Worker {
   String key;
@@ -10,7 +10,7 @@ class Worker {
   int? commentsCount;
   double avg_rating1;
   double? avg_rating2;
-  List<CommentModel> comments;
+  List<ReviewModel> comments;
 
   Worker({
     required this.key,

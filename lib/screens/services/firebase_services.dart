@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:gapi/model/comment.dart';
+import 'package:gapi/model/my_globals.dart';
+import 'package:gapi/model/review.dart';
 import 'package:gapi/model/worker.dart';
+import 'package:gapi/notifiers/review.dart';
 import 'package:gapi/theme/constants.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/bottom_black_button.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class FirebaseServices {
   DatabaseReference workersRef = FirebaseDatabase.instance.ref("workers");
@@ -71,30 +74,79 @@ class FirebaseServices {
     });
   }
 
-  writeReviewToUserOnFirebase({required reviewId}) async {
+  Future<ReviewModel> readReviewByUserOnFirebase({required String workerId}) async {
+    String uid = auth.currentUser!.uid;
+
+    DataSnapshot workerSnapshot = await usersRef.child(uid).child('reviews').child(workerId).get();
+
+    String reviewId = workerSnapshot.value.toString();
+
+    DataSnapshot reviewSnapshot = await reviewsRef.child(reviewId).get();
+
+    print('workerId: $workerId; reviewSnapshot: ${reviewSnapshot.ref.path}');
+
+    if (reviewSnapshot.exists) {
+      String comment = '';
+      String rating1 = reviewSnapshot.children.firstWhere((element) => element.key == 'rating1').value.toString();
+      String rating2 = reviewSnapshot.children.firstWhere((element) => element.key == 'rating2').value.toString();
+      if (reviewSnapshot.children.firstWhere((element) => element.key == 'comment').exists) {
+        comment = reviewSnapshot.children.firstWhere((element) => element.key == 'comment').value.toString();
+      }
+      print('---------------------------');
+      print('rating1: $rating1');
+      print('rating2: $rating2');
+      print('comment: $comment');
+
+      return ReviewModel(
+        rating1: int.parse(rating1),
+        rating2: int.parse(rating2),
+        commentText: comment,
+      );
+    } else {
+      print('???????????????? UGH ??????????????????');
+      return ReviewModel();
+    }
+  }
+
+  writeReviewToUserOnFirebase({required workerId, required reviewId}) async {
+    print('newReviewToUser: $reviewId');
     DatabaseReference newReviewRef = usersRef.child(auth.currentUser!.uid).child('reviews');
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyyy-MM-dd-hh-mm').format(now);
+    String formattedDate = DateFormat('yyyy-MM-dd-HH-mm').format(now);
     print('cp10');
+
     try {
-      await newReviewRef.set({formattedDate: reviewId});
+      // DatabaseReference newUserReviewRew = newReviewRef.push();
+      await newReviewRef.update({workerId: reviewId});
     } catch (e) {
       print('error #99: $e');
     }
   }
 
-  writeReviewToReviewOnFirebase({
+  writeReviewToReviewsOnFirebase({
     required String workerId,
     required double rating1,
     required double rating2,
     String? comment,
   }) async {
-    DatabaseReference newReviewRef = reviewsRef.push();
+    String uid = auth.currentUser!.uid;
+    DataSnapshot reviewIdSnapshot = await usersRef.child(uid).child('reviews').child(workerId).get();
+    String reviewId = reviewIdSnapshot.value.toString();
+    print('ammendedReview: $reviewId');
+    DatabaseReference newReviewRef;
+    if (reviewId == 'null') {
+      newReviewRef = reviewsRef.push();
+    }
+    // if ammendedReview, don't push a new review but edit the previous one
+    else {
+      newReviewRef = reviewsRef.child(reviewId);
+    }
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     if (comment == null)
       await newReviewRef.set({
+        'uid': auth.currentUser!.uid,
         'rating1': rating1,
         'rating2': rating2,
         'worker_id': workerId,
@@ -102,6 +154,7 @@ class FirebaseServices {
       });
     else
       await newReviewRef.set({
+        'uid': auth.currentUser!.uid,
         'rating1': rating1,
         'rating2': rating2,
         'worker_id': workerId,
@@ -109,7 +162,7 @@ class FirebaseServices {
         'date': formattedDate,
       });
 
-    await writeReviewToUserOnFirebase(reviewId: newReviewRef.key);
+    await writeReviewToUserOnFirebase(workerId: workerId, reviewId: newReviewRef.key);
   }
 
   List<Worker> sortByRanking(DataSnapshot snapshot) {
@@ -118,17 +171,17 @@ class FirebaseServices {
 
     for (var worker in snapshot.children) {
       print("- snapshot worker: ${worker.child('name').value}: ${worker.child('rating1/avg_rating').value}");
-      List<CommentModel> commentsList = [];
+      List<ReviewModel> commentsList = [];
       if (worker.child('comments').exists) {
         print('LLength: ${worker.child('comments').children.length}');
 
         for (var readComment in worker.child('comments').children) {
           print('comment.value: ${readComment.child('path')}');
           commentsList.add(
-            CommentModel(
-              body: readComment.child('comment').value.toString(),
+            ReviewModel(
+              commentText: readComment.child('comment').value.toString(),
               date: DateTime.parse(readComment.key.toString()),
-              rating: double.parse(readComment.child('avg_rating').value.toString()),
+              avgRating: double.parse(readComment.child('avg_rating').value.toString()),
             ),
           );
         }

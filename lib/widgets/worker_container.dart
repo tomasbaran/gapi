@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gapi/model/comment.dart';
+import 'package:gapi/model/review.dart';
 import 'package:gapi/screens/worker_detail_screen.dart';
 import 'package:gapi/theme/style_constants.dart';
 import 'package:gapi/widgets/comment.dart';
@@ -27,7 +27,7 @@ class WorkerContainer extends StatelessWidget {
   final String? workerAllCommentsCount;
   final String? rating1;
   final String? rating2;
-  final List<CommentModel> comments;
+  final List<ReviewModel> comments;
 
   @override
   Widget build(BuildContext context) {
