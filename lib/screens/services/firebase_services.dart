@@ -48,16 +48,18 @@ class FirebaseServices {
   }) async {
     DatabaseReference reviewIdRef = await checkIfAmmendedReviewAndGetReviewRef(workerId!);
     print('ammended reviewIdString: ${reviewIdRef}; ammendedReview: $ammendedReview');
-
+    double? newRating1;
+    double? newRating2;
     if (ammendedReview != null) {
       print('ammendedReview:');
       if (ammendedReview!) {
         ReviewModel oldReview = await readReviewByUserOnFirebase(workerId: workerId);
-        double oldRating1 = rating1!;
-        rating1 = rating1! - oldReview.rating1!.toDouble();
+        newRating1 = rating1!;
+        rating1 = newRating1 - oldReview.rating1!.toDouble();
         // print('updatedRating1: $updatedRating1 = rating1:$rating1 - oldReview.rating1: ${oldReview.rating1}');
         print('updatedRating1: $rating1');
-        rating2 = rating2! - oldReview.rating2!.toDouble();
+        newRating2 = rating2!;
+        rating2 = newRating2 - oldReview.rating2!.toDouble();
         print('updatedRating2: $rating2');
         // print('updatedRating1: $updatedRating2 = rating2:$rating2 - oldReview.rating2: ${oldReview.rating2}');
       }
@@ -68,6 +70,10 @@ class FirebaseServices {
       writeRating(workerId, rating1, '1');
       writeRating(workerId, rating2, '2');
       if (comment != null) {
+        if (ammendedReview!) {
+          rating1 = newRating1!;
+          rating2 = newRating2!;
+        }
         double avgRating = (rating1 + rating2) / 2;
         writeCommentToWorkerOnFirebase(
           comment,
