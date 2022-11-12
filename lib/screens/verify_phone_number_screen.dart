@@ -67,8 +67,8 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> with 
         phoneNumber: widget.phoneNumber,
         signOutOnSuccessfulVerification: false,
         linkWithExistingUser: false,
-        autoRetrievalTimeOutDuration: const Duration(seconds: 60),
-        otpExpirationDuration: const Duration(seconds: 60),
+        autoRetrievalTimeOutDuration: const Duration(seconds: 30),
+        otpExpirationDuration: const Duration(seconds: 30),
         onCodeSent: () {
           log(VerifyPhoneNumberScreen.id + ' OTP sent!');
         },

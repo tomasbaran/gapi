@@ -121,14 +121,29 @@ class FirebaseServices {
     DataSnapshot reviewSnapshot = await reviewsRef.child(reviewId).get();
 
     print('workerId: $workerId; reviewSnapshot: ${reviewSnapshot.ref.path}');
+    print('$reviewSnapshot ${reviewSnapshot.exists}');
 
     if (reviewSnapshot.exists) {
       String comment = '';
+
       String rating1 = reviewSnapshot.children.firstWhere((element) => element.key == 'rating1').value.toString();
+
       String rating2 = reviewSnapshot.children.firstWhere((element) => element.key == 'rating2').value.toString();
-      if (reviewSnapshot.children.firstWhere((element) => element.key == 'comment').exists) {
+      Map readReview = reviewSnapshot.value as Map<String, dynamic>;
+      print('readReview: ${readReview.containsKey('comment')}');
+      print('cp0 a: ${reviewSnapshot.value}');
+      print('cp0 b: ${reviewSnapshot.children.contains('comment')}');
+
+      //.children.kcontains("comment")}');
+      print('cp1: ${reviewSnapshot.children.first.key}');
+      if (readReview.containsKey('comment')) {
+        comment = readReview.entries.firstWhere((element) => element.key == 'comment').value;
+        print('1A: contains comment: $comment');
+
         comment = reviewSnapshot.children.firstWhere((element) => element.key == 'comment').value.toString();
+        print('1B: contains comment: $comment');
       }
+
       print('---------------------------');
       print('rating1: $rating1');
       print('rating2: $rating2');

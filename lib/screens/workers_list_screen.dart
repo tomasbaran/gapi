@@ -127,15 +127,18 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
                   const Expanded(child: Text(': servicios del hogar', style: tsMainAppBarSubtitle)),
                   (FirebaseAuth.instance.currentUser == null)
                       ? Container()
-                      : MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            child:
-                                // Icon(Icons.account_circle_sharp),
-                                Icon(Icons.verified),
-                            onTap: (() => FirebaseServices().logout()),
-                          ),
-                        ),
+                      // RELEASE-MODE:
+                      : const Icon(Icons.verified)
+                  // DEV-MODE:
+                  // : MouseRegion(
+                  //     cursor: SystemMouseCursors.click,
+                  //     child: GestureDetector(
+                  //       child:
+                  //           // Icon(Icons.account_circle_sharp),
+                  //           Icon(Icons.verified),
+                  //       onTap: (() => FirebaseServices().logout()),
+                  //     ),
+                  //   ),
                 ],
               ),
               const SizedBox(height: 4),
