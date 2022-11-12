@@ -69,17 +69,20 @@ class FirebaseServices {
       await writeOverallRatings(workerId, rating1, rating2);
       writeRating(workerId, rating1, '1');
       writeRating(workerId, rating2, '2');
+      print('commentario: $comment');
       if (comment != null) {
-        if (ammendedReview!) {
-          rating1 = newRating1!;
-          rating2 = newRating2!;
+        if (comment != '') {
+          if (ammendedReview!) {
+            rating1 = newRating1!;
+            rating2 = newRating2!;
+          }
+          double avgRating = (rating1 + rating2) / 2;
+          writeCommentToWorkerOnFirebase(
+            comment,
+            workerId,
+            avgRating,
+          );
         }
-        double avgRating = (rating1 + rating2) / 2;
-        writeCommentToWorkerOnFirebase(
-          comment,
-          workerId,
-          avgRating,
-        );
       }
     }
     // else {
