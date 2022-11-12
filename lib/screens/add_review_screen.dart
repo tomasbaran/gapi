@@ -27,7 +27,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     myController.dispose();
   }
 
-  String? comment;
   @override
   Widget build(BuildContext context) {
     // ReviewModel loadReviewModel = FirebaseServices().readReviewByUserOnFirebase(workerId: workerId);
@@ -47,8 +46,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       body: FutureBuilder(
           future: FirebaseServices().readReviewByUserOnFirebase(workerId: widget.workerId),
           builder: (context, snapshot) {
-            if (snapshot.connectionState ==
-                ConnectionState.done) /* {
+            if (snapshot.hasData) /* {
               return Text('loading');
             } else if (snapshot.hasData)  */
 
