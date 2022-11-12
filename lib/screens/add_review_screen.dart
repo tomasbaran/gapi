@@ -31,7 +31,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   Widget build(BuildContext context) {
     // ReviewModel loadReviewModel = FirebaseServices().readReviewByUserOnFirebase(workerId: workerId);
 
-    String? comment = myController.text;
+    String? comment;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -67,6 +67,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               print('commentText: ${snapshot.data!.commentText}');
               if (snapshot.data!.commentText != null) {
                 myController.text = snapshot.data!.commentText!;
+                myController.selection = TextSelection.collapsed(offset: myController.text.length);
                 comment = myController.text;
               }
               return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -84,8 +85,10 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     controller: myController,
                     onChanged: (value) {
                       comment = value;
+
                       print('onChanged: $value');
                     },
+                    // onSubmitted: (value) => ,
                     textCapitalization: TextCapitalization.sentences,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
